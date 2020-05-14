@@ -1,0 +1,84 @@
+`Adding two numbers results in: ${2 + 5}` // "Adding two numbers results in: 7". STRING TEMPLATE LITERALS
+
+Math.floor(Math.random() * 10) + 1 // Generate random number from 1 to 10
+
+parseInt() and parseFloat()
+
+Always use strict equality '===' and also non equality '!=='
+
+array.sort() is not a numeric sort!!
+
+Arrays and Objects are stored as "Reference types". Stores a reference to where that array is in memory (points)...compared to primitive types
+
+Use const with arrays...because we always want the pointer to stay the same (don't want to point to new array)
+
+Objects are like Dicts in Python. Use dot notation or square brackets to access key:value pairs
+(student['exams']['midterm'] + student['exams']['final']) / 2
+
+for..of loops. example: for (let sub of subreddits) {}
+
+Iterating over Objects -> Object.keys(obj) or Object.values(obj)  will return an array of keys or values, respectively
+..or use for..in loops to loop over keys. example: for (let key in subreddits) {}
+
+'let' and 'const' has different scoping compared to 'var'. Function scoping (var) vs Block scoping (let, const)
+
+Multiple ways to create/define a function, could store them as a variable too!..because functions are also objects
+
+Functions can be return values of other functions. "Function factories"
+
+Functions and vars are "hoisted", but not let and const
+
+Callbacks
+
+Map - creates a NEW array with the results of calling a callback on every element in the array
+
+Arrow functions: Behaves just like function expression, leaner syntax. parenthesis optional around one parameter, use empty parenthesis for no parameter. 
+
+Array.find used often. finds the first occuring then stops straight away!
+
+Filter can be used to find all occurances in an object then put them in a new object. Like a search function on a website
+
+Every: has to return true for EVERY single element (according to the equality we give it), for it to return true
+Some: similar to Every BUT returns true if ANY of the elements pass the equality test we give it.
+
+Sort revisited. Sort with an arrow function inside doesn't create a new copy of array. Mutates original array! Use .slice() to create a new copy array
+
+Reduce: executes a reducer function on each element of the array, resulting in a single value. We can set the accumulator to have a different starting value (like an object!)
+
+Function parameters can also be set to default value if undefined (that parameter wasn't passed into it).
+
+Spread: ...  3 dots
+For function calls: spread something (most commonly an array) into a function call, each element in your array is passed into the function as a standalone argument.
+For array literals: make new array with copies of these spread'ed out arrays inside.
+For object literals: make new object with copies of the properties from these spread'ed out objects, inside. Can't spread object into an array. "Duplicate" properties
+	just take on whichever property was brought in last.
+
+Rest Parameters: collect all (infinite) parameters and have them in an actual array object (unlike traditional 'arguments' array-like object).
+	Rest collects just all the "unclaimed" parameters, so it works cleanly when you're declaring multiple defined parameters too.
+
+Destructuring: clean syntax to unpack values from arrays, and properties from objects.... all into distinct variables
+	Can also destructure parameters. quite helpful
+
+Shorthand Object properties: When we want to create a new object and the key and variable are going to be the using the same name.
+
+"Computed" Object properties: We can use a variable as a key name in an object literal.
+
+METHODS: When we add functions as properties on objects...we call them methods!
+	There is shorthand available when declaring these methods inside objects.
+	Generally don't use arrow functions to create methods because of how it behaves with the 'this' keyword.
+
+THIS: returns an object that is a reference to the current execution scope.
+	let and const are not added to the scopes (aka window, sometimes)...but var is
+	The value of this will change depending on how the function is actually executed. Not just where you write it! AKA Invocation Context.
+	>> Rule of thumb: if you're calling it using dot notation, the scope will be what object is on the left of the dot. If no dot then the scope is the global window
+	Using an arrow function to create method gives different behaviour. Arrow functions don't get their own this! They get their parent function's 'this'
+
+
+CSS: need to know how to select elements, .class, #id, attributes (which is like input[type="password])
+	AN element can only have one ID but can have multiple classes
+	Can combine selectors
+
+
+
+10:20am
+11:30 break til 12:10
