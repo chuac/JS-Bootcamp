@@ -84,38 +84,43 @@ const warriorsGames = [{
   }
 ]
 
-const ulParent = document.createElement('ul'); // create element for us to append our li s to
-for (let game of warriorsGames) {
-  const {homeTeam, awayTeam} = game;
+const makeChart = (games, targetTeam) => {
+  const ulParent = document.createElement('ul'); // create element for us to append our li s to
+  for (let game of games) {
+    const gameLi = document.createElement('li');
+    gameLi.innerHTML = getScoreLine(game);
+    
+    gameLi.classList.add(isWinner(game, targetTeam) ? 'win' : 'loss'); // if the object's isWinner is true then set 'win' class
+
+    ulParent.appendChild(gameLi); // could also do append()
+  }
+  return ulParent;
+}
+
+const isWinner = ({homeTeam, awayTeam}, targetTeam) => {
+  const targetObj = homeTeam.team === targetTeam ? homeTeam : awayTeam; // if hTeam's name is GoldenState then grab that, otherwise they're the away team. Finding the target team
+  return targetObj.isWinner;
+}
+
+const getScoreLine = ({homeTeam, awayTeam}) => { // accepts a game object and destructures
   const {team: hTeam, points: hPoints} = homeTeam; // different syntax of desctructuring since we'd have clases of two names, two points. this way sets them to names we choose
   const {team: aTeam, points: aPoints} = awayTeam;
 
-  const gameLi = document.createElement('li');
+    
   let scoreLine;
   const teamNames = `${aTeam} @ ${hTeam}`;
   if (aPoints > hPoints) {
-    // if (aTeam === 'Golden State') {
-    //   gameLi.classList.add('win');
-    // } else {
-    //   gameLi.classList.add('loss');
-    // }
     scoreLine = `<b>${aPoints}</b> - ${hPoints}`;
   } else {
-    // if (aTeam !== 'Golden State') {
-    //   gameLi.classList.add('win');
-    // } else {
-    //   gameLi.classList.add('loss');
-    // }
     scoreLine = `${aPoints} - <b>${hPoints}</b>`;
   }
-  
-  const warriorsObj = hTeam === 'Golden State' ? homeTeam : awayTeam; // if hTeam's name is GoldenState then grab that, otherwise they're the away team
-  gameLi.classList.add(warriorsObj.isWinner ? 'win' : 'loss'); // if the object's isWinner is true then set 'win' class
-
-  gameLi.innerHTML = `${teamNames} ${scoreLine}`; // need to use innerHTML vs innerText to render the <b> tags
-
-  ulParent.appendChild(gameLi); // could also do append()
-
-  console.log(scoreLine);
+  return `${teamNames} ${scoreLine}`;
 }
-document.querySelector('body').prepend(ulParent); // shortcut would just be document.body
+
+const gsSection = document.querySelector('#gs');
+const hrSection = document.querySelector('#hr');
+const gsChart = makeChart(warriorsGames, 'Golden State');
+const hrChart = makeChart(warriorsGames, 'Houston');
+
+gsSection.appendChild(gsChart);
+hrSection.appendChild(hrChart);
