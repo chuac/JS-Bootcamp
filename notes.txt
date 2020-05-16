@@ -78,6 +78,39 @@ CSS: need to know how to select elements, .class, #id, attributes (which is like
 	AN element can only have one ID but can have multiple classes
 	Can combine selectors
 
+Documents have tons of built in methods...like getElementById. null if no matching id, returns first match if not unique ids
+	getElementsByTagName (all the types of elements, like paragraph, h1, etc). returns array-like object, containing element objects. still iterable though
+	getElementsByClassName by elements' classes. also returns array-like object, even if only one element found
+
+querySelector(): newer, all-in-one method to select a SINGLE element. uses CSS selectors like # for ids, . dots for classes, etc. 
+	Can stack selectors like document.querySelector('li.className') to find the first instance of a list item that has class of className.
+	Even using CSS attribute selector like document.querySelector('input[type="password]')
+querySelectorAll(): ^ same as above but a collection of all matches. also returns an array-like object
+
+innerText vs textContent: innerText is "aware" of what is going to be rendered on the actual webpage. textContent doesn't care at all.
+innerHTML: returns a string with all the elements inside, including the HTML tags! ALL of the content
+
+HTML Attributes: we can manipulate these with JS through the DOM. like for inputs (value, checked), href, src
+	getAttribute()
+	setAttribute( , ) replaces the current class with what we give it...not desirable
+	
+Parent/Children/Siblings: parentElement, children, nextElementSibling, previousElementSibling
+
+Property names in JS/DOM are all camelCased. not kabob-cased
+
+Style property: can use to change style properties of an element BUT we can't use it to read existing styles (unless they were defined in-line)
+	getComputedStyle gives all existing styles, at the time the object (that was returned from getComputedStyle) is called!
+
+classList: has convenient methods like add, remove, toggle which are better to use than setAttribute when manipulating classes
+
+Creating and Adding elements: createElement()  put a string like 'img' inside the parentheses to create an <img></img> element
+	appendChild() select an element and append a new element to this element as a child
+	insertBefore(newElement, existingElement) cumbersome syntax
+	insertAdjacentElement() not as popular, check MDN for syntax
+	append(), and prepend() similar to appendChild() but now the method takes multiple elements to add
+
+Removing: removeChild() supported on IE, but requires parent to be called on, just like appendChild()
+	remove() newer but simpler because it doesn't require you to call it on the parent object.
 
 
 10:20am
