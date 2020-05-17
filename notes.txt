@@ -126,7 +126,8 @@ addEventListener is used instead. Doesn't set the onclick property on an element
 
 Event Object: automatically passed into the function of your addEventListener. capture it in your function, normally named "e" or "evt"
 
-
+Key down or up (keydown, keyup) runs no matter if they change the input at all. Meaning they also register buttons like Shift, CAPS Lock, etc
+	Key press (keypress) only runs when key usage changes input (character keys)...but also Enter key!
 
 
 10:45

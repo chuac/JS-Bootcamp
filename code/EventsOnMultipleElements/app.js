@@ -15,3 +15,20 @@ for (let colour of colours) {
 	box.addEventListener('click', changeColour); // the scope of this box div will be used to run the 'this' code
 	
 }
+
+//
+// from video #158 about Key Events
+const addItemInput = document.querySelector('#addItem');
+const itemsUL = document.querySelector('#items');
+
+addItemInput.addEventListener('keypress', function(e) {
+	if (!this.value) { // no input given by user
+		return;
+	}
+	if (e.key === 'Enter') {
+		console.log(this.value);
+		const newLI = document.createElement('li');
+		newLI.innerText = this.value;
+		itemsUL.appendChild(newLI);
+	}
+})
