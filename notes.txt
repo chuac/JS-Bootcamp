@@ -122,6 +122,9 @@ Events: follow a general flow/pattern: we have a thing (element), event type, th
 	Why? Not clean but also because there's no way for an element to listen to multiple events.
 
 addEventListener is used instead. Doesn't set the onclick property on an element, but attaching listeners (unlimited amount, for any type of event)
+	can add multiple of the same eventListeners in a loop, etc to multiple elements
+
+Event Object: automatically passed into the function of your addEventListener. capture it in your function, normally named "e" or "evt"
 
 
 
