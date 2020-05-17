@@ -112,6 +112,18 @@ Creating and Adding elements: createElement()  put a string like 'img' inside th
 Removing: removeChild() supported on IE, but requires parent to be called on, just like appendChild()
 	remove() newer but simpler because it doesn't require you to call it on the parent object.
 
+Events: follow a general flow/pattern: we have a thing (element), event type, then the code to run.
+	eg. button, click, change the colour
+	input, hits return, get search results
+	image, mouseover, display the img caption
+	
+2 ways NOT to add events: in-line with elements, 
+			selecting an element by ID in JS then setting it's onclick value/property to your function (that contains your code to run)
+	Why? Not clean but also because there's no way for an element to listen to multiple events.
 
-10:20am
-11:30 break til 12:10
+addEventListener is used instead. Doesn't set the onclick property on an element, but attaching listeners (unlimited amount, for any type of event)
+
+
+
+
+10:45
