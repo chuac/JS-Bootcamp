@@ -26,7 +26,6 @@ addItemInput.addEventListener('keypress', function(e) {
 		return;
 	}
 	if (e.key === 'Enter') {
-		console.log(this.value);
 		const newLI = document.createElement('li');
 		newLI.innerText = this.value;
 		itemsUL.appendChild(newLI);
