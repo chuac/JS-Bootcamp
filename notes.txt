@@ -129,5 +129,28 @@ Event Object: automatically passed into the function of your addEventListener. c
 Key down or up (keydown, keyup) runs no matter if they change the input at all. Meaning they also register buttons like Shift, CAPS Lock, etc
 	Key press (keypress) only runs when key usage changes input (character keys)...but also Enter key!
 
+Form Events and preventDefault: select a form, add a listener on the submit, then do anything you want with the form data. using e.preventDefault() will stop the form
+	from forwarding to the next page!
 
-10:45
+Input and Change Events: don't need to wait for user to click submit, can grab what they enter using 'input' event to have in-sync representation of what user has in the form.
+	'input' will always update whenever there's new characters, 'change' only updates when user changes focus (like finished typing text then clicked out)
+
+Call Stack: how JS keeps track of its place in a script that calls multiple functions. Unless a function returns a value, it's added to the stack and that's run first. FIFO
+	You can use the Dev Tools to add a breakpoint and step through the Call Stack to debug
+
+JS is single threaded! Can only do one thing at a time. Can send a request but it'll wait until it returns with data until it continues.
+	Fortunately, our web browsers handle things that take time (like setTimeout, eventListeners, requests) then pass what needs to be done back to the JS call stack.
+	More exactly: When the time is up, the "Web APIs" of our browsers place the function into the "Callback queue", then JS draws from that and adds it to the Call Stack.
+
+getBoundingClientRect()
+
+Using callbacks: when you have two callbacks (success, failure) it can get messy very quickly (Callback Hell). Promises solves this!
+
+Promises: a JS object that represents the eventual completion or failure of some task (a task that would take time).
+	We can attach callbacks to a promise, instead of passing callbacks into a function.
+	PromiseStatus is "pending" until it is "resolved" or "rejected"
+	We can return promise objects from functions, and also chain then() and catch()
+
+
+
+11:25
