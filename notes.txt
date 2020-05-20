@@ -150,6 +150,8 @@ Promises: a JS object that represents the eventual completion or failure of some
 	We can attach callbacks to a promise, instead of passing callbacks into a function.
 	PromiseStatus is "pending" until it is "resolved" or "rejected"
 	We can return promise objects from functions, and also chain then() and catch()
+	More importantly, we can resolve and reject with data! Can pass through data to be used in then() and catch().
+	Promise Chaining to help with nesting then()s. Only need one catch()!
 
 
 
