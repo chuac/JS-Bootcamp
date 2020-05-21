@@ -153,6 +153,9 @@ Promises: a JS object that represents the eventual completion or failure of some
 	More importantly, we can resolve and reject with data! Can pass through data to be used in then() and catch().
 	Promise Chaining to help with nesting then()s. Only need one catch()!
 
+AJAX: Asynchronous Javascript And XML (but mostly JSON instead of XML nowadays)
+	JSON keys must be "strings" in quotes
+
 
 
 11:25
