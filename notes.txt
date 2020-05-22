@@ -156,6 +156,10 @@ Promises: a JS object that represents the eventual completion or failure of some
 AJAX: Asynchronous Javascript And XML (but mostly JSON instead of XML nowadays)
 	JSON keys must be "strings" in quotes
 
+Fetch: returns a Promise object. Not supported in IE.
+	Resolved with a Response object. This response object's body is a ReadableStream. Call .json() on the response object and it'll return another promise object.
+
+
 
 
 11:25
