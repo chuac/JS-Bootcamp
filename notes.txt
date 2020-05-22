@@ -159,7 +159,11 @@ AJAX: Asynchronous Javascript And XML (but mostly JSON instead of XML nowadays)
 Fetch: returns a Promise object. Not supported in IE.
 	Resolved with a Response object. This response object's body is a ReadableStream. Call .json() on the response object and it'll return another promise object.
 
+Axios: external library that uses Fetch. 
+	Main advantage is that the data is already parsed for us.
+	Second advantage is that Axios knows a 404 also triggers an error, and therefore the catch() callback. Unlike fetch where you have to check the status codes
 
 
 
-11:25
+
+
