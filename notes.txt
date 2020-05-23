@@ -166,5 +166,6 @@ Axios: external library that uses Fetch.
 Async keyword: write it infront of a function declaration. if the function would normally return a value, it would now return a Promise resolved to that value.
 	Throw an exception to reject, to be caught
 Await keyword: can only use inside an Async function. Waits for request to return. No need for .then(). Makes code look synchronous
-
+Parallel vs Sequential requests: If you don't need to have requests in sequence (like if you need to get the URL of a page back from a request), just do it in Parallel!
+Promise.all : returns an array as the resolved value that contains multiple other resolved promises
 
