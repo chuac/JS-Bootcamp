@@ -163,7 +163,8 @@ Axios: external library that uses Fetch.
 	Main advantage is that the data is already parsed for us.
 	Second advantage is that Axios knows a 404 also triggers an error, and therefore the catch() callback. Unlike fetch where you have to check the status codes
 
-
-
+Async keyword: write it infront of a function declaration. if the function would normally return a value, it would now return a Promise resolved to that value.
+	Throw an exception to reject, to be caught
+Await keyword: can only use inside an Async function. Waits for request to return. No need for .then(). Makes code look synchronous
 
 
