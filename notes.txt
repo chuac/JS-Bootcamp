@@ -182,5 +182,3 @@ Classes: the constructor inside the class runs instantly when new keyword is cal
 Extends with Classes: if a method is not found in the child prototype, then it will look in the parent prototype
 Super with Classes: re-use functionality from the parent constructor (i.e in the super class)
 
-
-1:30
