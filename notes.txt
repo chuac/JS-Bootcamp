@@ -179,7 +179,8 @@ Constructor Functions and the 'new' keyword: We add methods to the prototype ins
 
 Classes: the constructor inside the class runs instantly when new keyword is called on it. Methods can now be added to the prototype inside the class.
 	We can run methods straight away by calling them in the Class constructor!
-
+Extends with Classes: if a method is not found in the child prototype, then it will look in the parent prototype
+Super with Classes: re-use functionality from the parent constructor (i.e in the super class)
 
 
 1:30
