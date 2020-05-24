@@ -177,7 +177,8 @@ OOP Factory Functions: Pass in some values and this factory makes and object the
 Constructor Functions and the 'new' keyword: We add methods to the prototype instead of each object created. Like how "abc".slice === "def".slice . They share same methods!
 	However, adding methods to the prototype is a little clunky, Class keyword should solve this
 
-Classes: the constructor inside the class runs instantly when new keyword is called on it. Methods can now be added to the prototype inside the class
+Classes: the constructor inside the class runs instantly when new keyword is called on it. Methods can now be added to the prototype inside the class.
+	We can run methods straight away by calling them in the Class constructor!
 
 
 
