@@ -169,3 +169,7 @@ Await keyword: can only use inside an Async function. Waits for request to retur
 Parallel vs Sequential requests: If you don't need to have requests in sequence (like if you need to get the URL of a page back from a request), just do it in Parallel!
 Promise.all : returns an array as the resolved value that contains multiple other resolved promises
 
+Prototype: if considering strings, the String prototype object is where string methods are stored. like concat, toUpperCase, etc
+
+OOP Factory Functions: Pass in some values and this factory makes and object then returns it, so we can use it. "Recipe"
+
