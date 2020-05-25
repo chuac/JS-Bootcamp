@@ -3,3 +3,8 @@ Timer app: instead of sequential code flipping back and forth between our two fu
 	> Solving the 'this' issue. We learned new ways of using 'bind', 'call', or 'apply' to pass in an argument of 'this'. Check screenshot.
 
 	Have 2 options on how to update the time remaining (tick). Either store the time left as an instance variable, or store it in the input element (storing inside DOM)
+
+	SVG Elements are HTML elements. Top left corner is the Origin. X-axis increases from left to right. Y-axis increases from top to bottom. You won't have negative X/Y
+		Can show multiple shapes in one SVG area
+		Circles have a Fill (inside part), and Stroke (border)
+		Border or stroke-dasharray, starts being drawn from the right side then goes clockwise. same as circumference (2 * PI * r)
