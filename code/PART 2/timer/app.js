@@ -1,3 +1,5 @@
+//// DOM-centric approach
+
 class Timer {
     constructor(durationInput, startButton, pauseButton) {
         this.durationInput = durationInput;
@@ -16,7 +18,19 @@ class Timer {
         clearInterval(this.intervalID);
     }
     tick = () => {
-        console.log('tick');
+        if (this.timeRemaining <= 0) {
+            this.pause();
+        }
+        else {
+            this.timeRemaining = this.timeRemaining - 1; // setter on the left, getter on the right - 1.
+        }
+        
+    }
+    get timeRemaining() { // getter
+        return parseFloat(this.durationInput.value); // html values are strings so we need to convert
+    }
+    set timeRemaining(time) { // setter
+        this.durationInput.value = time;
     }
 }
 

@@ -2,4 +2,4 @@ Timer app: instead of sequential code flipping back and forth between our two fu
 	coding. where something may trigger an event and that itself will animate the circle.
 	> Solving the 'this' issue. We learned new ways of using 'bind', 'call', or 'apply' to pass in an argument of 'this'. Check screenshot.
 
-	Have 2 options on how to update the time remaining (tick). Either store the time left as an instance variable, or store it in the input element.
+	Have 2 options on how to update the time remaining (tick). Either store the time left as an instance variable, or store it in the input element (storing inside DOM)
