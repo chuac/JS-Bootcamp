@@ -21,7 +21,7 @@ class Timer {
             this.onStart();
         }
         this.tick();
-        this.intervalID = setInterval(this.tick, 1000); // timer ID is saved to be used in pause()
+        this.intervalID = setInterval(this.tick, 50); // timer ID is saved to be used in pause(). tick every 50ms
     }
     pause = () => {
         clearInterval(this.intervalID);
@@ -37,7 +37,7 @@ class Timer {
             if (this.onTick) { // if a callback was passed in
                 this.onTick();
             }
-            this.timeRemaining = this.timeRemaining - 1; // setter on the left, getter on the right - 1.
+            this.timeRemaining = this.timeRemaining - 0.05; // setter on the left, getter on the right - 1. decrement by 50ms now
         }
         
     }
@@ -45,6 +45,6 @@ class Timer {
         return parseFloat(this.durationInput.value); // html values are strings so we need to convert
     }
     set timeRemaining(time) { // setter
-        this.durationInput.value = time;
+        this.durationInput.value = time.toFixed(2); // round to 2 decimal places
     }
 }
