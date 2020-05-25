@@ -6,26 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>timer app - DOM-centric approach</title>
+
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"/>
 </head>
 
 <body>
-
-    <svg height="400" width="400">
-        <circle 
-            r="190" 
-            cx="200" 
-            cy="200"
+    <div class="timer">
+        <div class="controls">
+          <input id="duration" value="3" />
+          <div>
+            <button id="start"><i class="fas fa-play"></i></button>
+            <button id="pause"><i class="fas fa-pause"></i></button>
+          </div>
+        </div>
+        <svg class="dial">
+          <circle
             fill="transparent"
-            stroke="blue"
+            stroke="green"
             stroke-width="15"
-            transform="rotate(-90 200 200)"
-        /> <!-- radius, centrepoints. rotate -90 degrees around the x100 y100 centrepoint -->
-
-    </svg>
-
-    <input id="duration" value="30"/>
-    <button id="start">Start</button>
-    <button id="pause">Pause</button>
+            r="190"
+            cx="0"
+            cy="200"
+            transform="rotate(-90 100 100)"
+          />
+        </svg>
+    </div>
+    
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="timer.js"></script>

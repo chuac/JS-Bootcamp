@@ -18,26 +18,27 @@ class Timer {
 
     start = () => { // binded to the event listener declared in the constructor. as an arrow function to solve our 'this' issue
         if (this.onStart) { // if a callback was passed in
-            this.onStart();
+            this.onStart(this.timeRemaining); // the total timer duration is passed along
         }
         this.tick();
-        this.intervalID = setInterval(this.tick, 50); // timer ID is saved to be used in pause(). tick every 50ms
+        this.intervalID = setInterval(this.tick, 20); // timer ID is saved to be used in pause(). tick every 20ms for smoothness
     }
     pause = () => {
         clearInterval(this.intervalID);
     }
     tick = () => {
         if (this.timeRemaining <= 0) {
+            this.pause();
             if (this.onComplete) { // if a callback was passed in
                 this.onComplete();
             }
-            this.pause();
         }
         else {
+            this.timeRemaining = this.timeRemaining - 0.02; // setter on the left, getter on the right - 1. decrement by 20ms now
+            // above line has to be called before below 2 lines so it'll be faster
             if (this.onTick) { // if a callback was passed in
-                this.onTick();
+                this.onTick(this.timeRemaining);
             }
-            this.timeRemaining = this.timeRemaining - 0.05; // setter on the left, getter on the right - 1. decrement by 50ms now
         }
         
     }
