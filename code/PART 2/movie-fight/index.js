@@ -1,8 +1,7 @@
 
-//http://www.omdbapi.com/?apikey=e7a59c4a
 const fetchData = async (searchTerm) => {
     const response = await axios.get('http://www.omdbapi.com/', {
-        params: { // all lowercase
+        params: { // param keys all lowercase
             apikey: 'e7a59c4a',
             s: searchTerm
         }
@@ -12,6 +11,15 @@ const fetchData = async (searchTerm) => {
 
 
 const input = document.querySelector('input');
-input.addEventListener('input', (event) => {
-    fetchData(event.target.value);
-})
+
+let timeoutId;
+const onInput = (event) => {
+    if (timeoutId) { // checks if we had already started a request recently, if so: cancel the previous request (which was waiting to run because of the setTimeout)
+        clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => { // introduces a delay to actually calling the API
+        fetchData(event.target.value);
+    }, 1000);
+};
+
+input.addEventListener('input', onInput);
