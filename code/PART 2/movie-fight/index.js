@@ -33,6 +33,11 @@ const resultsWrapper = document.querySelector('.results');
 const onInput = async (event) => { // could wrap debounce down below too
     const movies = await fetchData(event.target.value);
     
+    if (!movies.length) { // if empty movies result, close the dropdown menu and exit function
+        dropdown.classList.remove('is-active');
+        return;
+    }
+
     resultsWrapper.innerHTML = ''; // empty results before each new call
     dropdown.classList.add('is-active'); // open the dropdown menu. Bulma CSS class
     for (let movie of movies) {
@@ -43,6 +48,10 @@ const onInput = async (event) => { // could wrap debounce down below too
             <img src="${imgSRC}"/>
             ${movie.Title}
         `;
+        option.addEventListener('click', () => {
+            dropdown.classList.remove('is-active'); // user clicked on an option so we close the dropdown menu
+            input.value = movie.Title; // update the input box with the user's selection
+        })
         
         resultsWrapper.appendChild(option);
     }
