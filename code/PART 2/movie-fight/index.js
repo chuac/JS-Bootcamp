@@ -51,6 +51,7 @@ const onInput = async (event) => { // could wrap debounce down below too
         option.addEventListener('click', () => {
             dropdown.classList.remove('is-active'); // user clicked on an option so we close the dropdown menu
             input.value = movie.Title; // update the input box with the user's selection
+            onMovieSelect(movie);
         })
         
         resultsWrapper.appendChild(option);
@@ -64,3 +65,14 @@ document.addEventListener('click', (event) => { // listen for a click anywhere i
         dropdown.classList.remove('is-active'); // close the dropdown menu! Bulma CSS class
     }
 });
+
+const onMovieSelect = async (movie) => {
+    const response = await axios.get('http://www.omdbapi.com/', {
+        params: { // param keys all lowercase
+            apikey: 'e7a59c4a',
+            i: movie.imdbID // as stated with API usage
+        }
+    });
+
+    console.log(response.data);
+}
