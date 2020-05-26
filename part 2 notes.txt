@@ -15,6 +15,7 @@ Application Design Pattern: Plan of attack -> Setup boilerplate code -> Identify
 	OMDb API key: e7a59c4a
 	With Axios we can pass along an object with parameters for requesting the API
 	Debouncing: Waiting for some time to pass after the last event to actually do something.
+		A reusable debounce function wraps the initial function and gives it a "shield" to protect from requests that are too fast
 
 
 

@@ -12,14 +12,20 @@ const fetchData = async (searchTerm) => {
 
 const input = document.querySelector('input');
 
-let timeoutId;
-const onInput = (event) => {
-    if (timeoutId) { // checks if we had already started a request recently, if so: cancel the previous request (which was waiting to run because of the setTimeout)
-        clearTimeout(timeoutId);
+const debounce = (func, delay = 1000) => { // implemented a reusable debounce
+    let timeoutId;
+    return (...args) => { // grab all the args that was passed in with this func, and pass it along
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => { // introduces a delay to actually calling the API
+            func.apply(null, args); // return all those args that was passed along, using apply
+        }, delay); // non-hardcoded delay
     }
-    timeoutId = setTimeout(() => { // introduces a delay to actually calling the API
-        fetchData(event.target.value);
-    }, 1000);
-};
+}
 
-input.addEventListener('input', onInput);
+const onInput = debounce((event) => { // could wrap debounce down below too
+    fetchData(event.target.value);
+}, 1000);
+
+input.addEventListener('input', onInput); // we could wrap debounce around this calling of onInput too
