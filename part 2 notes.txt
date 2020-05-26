@@ -8,3 +8,19 @@ Timer app: instead of sequential code flipping back and forth between our two fu
 		Can show multiple shapes in one SVG area
 		Circles have a Fill (inside part), and Stroke (border)
 		Border or stroke-dasharray, starts being drawn from the right side then goes clockwise. same as circumference (2 * PI * r)
+
+Application Design Pattern: Plan of attack -> Setup boilerplate code -> Identify challenging aspects of the project we're about to work on -> Get started on the project
+	Movie Fight app: Big challenges: Need to somehow fetch data about movies (hard-code? or API?), need auto-complete widget from scratch, styling CSS to make it nice
+	APIs usually have two return actions. A Listing (Indexing) result or a Show result
+	OMDb API key: e7a59c4a
+	With Axios we can pass along an object with parameters for requesting the API
+
+
+
+
+
+
+
+
+
+10:00
