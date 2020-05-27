@@ -20,10 +20,17 @@ Application Design Pattern: Plan of attack -> Setup boilerplate code -> Identify
 		Or #2: Have one big DIV in HTML file with class="autocomplete", then we create ALL the HTML for it in JS and insert it in. Less coupling of code. Better!
 		^Method #2 results in reusable code to create widgets
 	contains() method can help us see if the target of what the user clicked on is inside or outside the dropdown. If outside then we close the dropdown!
+	
+	But code has problems with not being re-usable: Autocomplete has knowledge of what a movie object is (so can't re-use code for Recipes for example), global variables
+		would make it hard to show a second autocomplete on the screen.
+	We split our project into two JS files. One index.js, and one autocomplete.js. index.js will hold non-reusable code for our very specific project: it'll pass a
+		config object that will pass in info for all the autocomplete.js which has methods like: fetchData(), renderOption() that knows how to render a movie, 
+		onOptionSelect() that is invoked when a user clicks an option of the dropdown menu, root element that autocomplete should be rendered into.
+		autocomplete.js must have zero knowledge of movies or recipes or blogs. Must be able to be re-usable depending on what gets passed in.
 
 
 
 
 
 
-10:00
+10:40
