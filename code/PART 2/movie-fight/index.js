@@ -1,6 +1,5 @@
-// pass a "config" object that contains all we need to customise our autocomplete for what we want. in this case: movies
-createAutoComplete({ 
-    root: document.querySelector('.autocomplete'), // give it one root element to render our autocomplete into
+
+const autoCompleteConfig = {
     renderOption(movie) { // how we want our options in the dropdown menu to look like
         const imgSRC = movie.Poster === 'N/A' ? '' : movie.Poster; // if Poster is 'N/A' from the API
         return `
@@ -26,6 +25,16 @@ createAutoComplete({
         }
         return response.data.Search; // the API's key is using capital S
     }
+};
+
+// pass a "config" object that contains all we need to customise our autocomplete for what we want. in this case: movies
+createAutoComplete({ // we only need to change the root element, so we can store rest of code in config object above
+    ...autoCompleteConfig, // spread autoCompleteConfig into here
+    root: document.querySelector('#left-autocomplete') // give it one root element to render our autocomplete into
+});
+createAutoComplete({
+    ...autoCompleteConfig, // make a copy of autoCompleteConfig and put into here
+    root: document.querySelector('#right-autocomplete') // give it one root element to render our autocomplete into
 });
 
 
