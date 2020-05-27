@@ -7,9 +7,6 @@ const autoCompleteConfig = {
             ${movie.Title} (${movie.Year})
         `; // simply make changes to these dropdown menu options right here
     },
-    onOptionSelect(movie) { // tell the widget which function to run when an option is selected
-        onMovieSelect(movie);
-    },
     inputValueWhenClicked(movie) { // tell the widget what value to insert into input box's value when an option is selected
         return movie.Title;
     },
@@ -30,22 +27,30 @@ const autoCompleteConfig = {
 // pass a "config" object that contains all we need to customise our autocomplete for what we want. in this case: movies
 createAutoComplete({ // we only need to change the root element, so we can store rest of code in config object above
     ...autoCompleteConfig, // spread autoCompleteConfig into here
-    root: document.querySelector('#left-autocomplete') // give it one root element to render our autocomplete into
+    root: document.querySelector('#left-autocomplete'), // give it one root element to render our autocomplete into
+    onOptionSelect(movie) { // tell the widget which function to run when an option is selected
+        document.querySelector('.tutorial').classList.add('is-hidden'); // hide tutorial when option selected. Bulma CSS class
+        onMovieSelect(movie, document.querySelector('#left-summary'));
+    },
 });
 createAutoComplete({
     ...autoCompleteConfig, // make a copy of autoCompleteConfig and put into here
-    root: document.querySelector('#right-autocomplete') // give it one root element to render our autocomplete into
+    root: document.querySelector('#right-autocomplete'), // give it one root element to render our autocomplete into
+    onOptionSelect(movie) { // tell the widget which function to run when an option is selected
+        document.querySelector('.tutorial').classList.add('is-hidden'); // hide tutorial when option selected. Bulma CSS class
+        onMovieSelect(movie, document.querySelector('#right-summary'));
+    },
 });
 
 
-const onMovieSelect = async (movie) => {
+const onMovieSelect = async (movie, summaryElement) => { // summary element to insert into no-longer hardcoded
     const response = await axios.get('http://www.omdbapi.com/', {
         params: { // param keys all lowercase
             apikey: 'e7a59c4a',
             i: movie.imdbID // as stated with API usage
         }
     });
-    document.querySelector('#summary').innerHTML = movieTemplate(response.data);
+    summaryElement.innerHTML = movieTemplate(response.data);
 }
 
 const movieTemplate = (movieDetail) => { // movieDetail is the more in-depth movie object, as per API
