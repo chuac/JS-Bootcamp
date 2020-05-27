@@ -22,6 +22,12 @@ createAutoComplete({ // give it one root element to render our autocomplete into
             <img src="${imgSRC}"/>
             ${movie.Title} (${movie.Year})
         `; // simply make changes to these dropdown menu options right here
+    },
+    onOptionSelect(movie) { // tell the widget which function to run when an option is selected
+        onMovieSelect(movie);
+    },
+    inputValueWhenClicked(movie) { // tell the widget what value to insert into input box's value when an option is selected
+        return movie.Title;
     }
 });
 

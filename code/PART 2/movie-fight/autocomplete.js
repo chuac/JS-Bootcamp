@@ -1,4 +1,4 @@
-const createAutoComplete = ({root, renderOption}) => {
+const createAutoComplete = ({root, renderOption, onOptionSelect, inputValueWhenClicked}) => {
     // we now accept a root element
     root.innerHTML = `
         <label><b>Search For a Movie</b></label>
@@ -31,8 +31,8 @@ const createAutoComplete = ({root, renderOption}) => {
             option.innerHTML = renderOption(movie);
             option.addEventListener('click', () => {
                 dropdown.classList.remove('is-active'); // user clicked on an option so we close the dropdown menu
-                input.value = movie.Title; // update the input box with the user's selection
-                onMovieSelect(movie);
+                input.value = inputValueWhenClicked(movie); // update the input box with the user's selection
+                onOptionSelect(movie);
             })
             
             resultsWrapper.appendChild(option);
