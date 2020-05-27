@@ -30,7 +30,7 @@ createAutoComplete({ // we only need to change the root element, so we can store
     root: document.querySelector('#left-autocomplete'), // give it one root element to render our autocomplete into
     onOptionSelect(movie) { // tell the widget which function to run when an option is selected
         document.querySelector('.tutorial').classList.add('is-hidden'); // hide tutorial when option selected. Bulma CSS class
-        onMovieSelect(movie, document.querySelector('#left-summary'));
+        onMovieSelect(movie, document.querySelector('#left-summary'), 'left');
     },
 });
 createAutoComplete({
@@ -38,12 +38,13 @@ createAutoComplete({
     root: document.querySelector('#right-autocomplete'), // give it one root element to render our autocomplete into
     onOptionSelect(movie) { // tell the widget which function to run when an option is selected
         document.querySelector('.tutorial').classList.add('is-hidden'); // hide tutorial when option selected. Bulma CSS class
-        onMovieSelect(movie, document.querySelector('#right-summary'));
+        onMovieSelect(movie, document.querySelector('#right-summary'), 'right');
     },
 });
 
-
-const onMovieSelect = async (movie, summaryElement) => { // summary element to insert into no-longer hardcoded
+let leftMovie;
+let rightMovie;
+const onMovieSelect = async (movie, summaryElement, side) => { // summary element to insert into no-longer hardcoded
     const response = await axios.get('http://www.omdbapi.com/', {
         params: { // param keys all lowercase
             apikey: 'e7a59c4a',
@@ -51,9 +52,55 @@ const onMovieSelect = async (movie, summaryElement) => { // summary element to i
         }
     });
     summaryElement.innerHTML = movieTemplate(response.data);
-}
+
+    if (side === 'left') {
+        leftMovie = response.data;
+    } else {
+        rightMovie = response.data;
+    }
+    if (leftMovie && rightMovie) { // if user has selected two movies then we can run a comparison
+        runComparison();
+    }
+};
+
+const runComparison = () => {
+    const leftSideStats = document.querySelectorAll('#left-summary .notification'); // select all the summary elements from that side
+    const rightSideStats = document.querySelectorAll('#right-summary .notification');
+
+    leftSideStats.forEach((leftStat, index) => {
+        rightStat = rightSideStats[index];
+
+        const leftSideValue = parseInt(leftStat.dataset.value); // dataset values are stored as strings in the DOM
+        const rightSideValue = parseInt(rightStat.dataset.value);
+
+        if (leftSideValue < rightSideValue) {
+            leftStat.classList.remove('is-primary');
+            leftStat.classList.add('is-warning'); // Bulma CSS classes
+        } else if (leftSideValue > rightSideValue) { // extra check since we may have equal values sometimes
+            rightStat.classList.remove('is-primary');
+            rightStat.classList.add('is-warning');
+        }
+    })
+};
 
 const movieTemplate = (movieDetail) => { // movieDetail is the more in-depth movie object, as per API
+    //const dollars = parseInt(movieDetail.BoxOffice.replace(/\$/g, '').replace(/,/g, '')); // BoxOffice doesn't seem to have values anymore at the API
+    const dollars = 0; // since the Box Office data doesn't seem to be working with the API. Just set to 0 for all
+    const metaScore = parseInt(movieDetail.Metascore);
+    const imdbRating = parseFloat(movieDetail.imdbRating);
+    const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ''));
+
+    const awards = movieDetail.Awards.split(' ').reduce((prev, word) => { // go through the string and tally up the numbers
+        const value = parseInt(word); // will return NaN if the string doesn't contain a number
+
+        if (isNaN(value)) { // no number found in this string
+            return prev;
+        } else {
+            return prev + value;
+        }
+    }, 0);
+
+    
     return `
         <article class="media">
             <figure class="media-left">
@@ -69,23 +116,23 @@ const movieTemplate = (movieDetail) => { // movieDetail is the more in-depth mov
                 </div>
             </div>
         </article>
-        <article class="notification is-primary">
+        <article data-value=${awards} class="notification is-primary">
             <p class="title">${movieDetail.Awards}</p>
             <p class="subtitle">Awards</p>
         </article>
-        <article class="notification is-primary">
+        <article data-value=${dollars} class="notification is-primary">
             <p class="title">${movieDetail.BoxOffice}</p>
             <p class="subtitle">BoxOffice</p>
         </article>
-        <article class="notification is-primary">
+        <article data-value=${metaScore} class="notification is-primary">
             <p class="title">${movieDetail.Metascore}</p>
             <p class="subtitle">Metascore</p>
         </article>
-        <article class="notification is-primary">
+        <article data-value=${imdbRating} class="notification is-primary">
             <p class="title">${movieDetail.imdbRating}</p>
             <p class="subtitle">IMDB Rating</p>
         </article>
-        <article class="notification is-primary">
+        <article data-value=${imdbVotes} class="notification is-primary">
             <p class="title">${movieDetail.imdbVotes}</p>
             <p class="subtitle">IMDB Votes</p>
         </article>

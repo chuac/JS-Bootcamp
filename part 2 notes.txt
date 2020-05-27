@@ -27,7 +27,8 @@ Application Design Pattern: Plan of attack -> Setup boilerplate code -> Identify
 		config object that will pass in info for all the autocomplete.js which has methods like: fetchData(), renderOption() that knows how to render a movie, 
 		onOptionSelect() that is invoked when a user clicks an option of the dropdown menu, root element that autocomplete should be rendered into.
 		autocomplete.js must have zero knowledge of movies or recipes or blogs. Must be able to be re-usable depending on what gets passed in.
-
+	To compare the movies, maybe we should store the movie data when we fetch/select it.
+		We inject the parsed data into the properties of each HTML article element under the data-value tag (aka dataset named value)
 
 
 
