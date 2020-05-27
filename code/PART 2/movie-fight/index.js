@@ -15,13 +15,14 @@ const fetchData = async (searchTerm) => {
 }
 
 createAutoComplete({ // give it one root element to render our autocomplete into
-    root: document.querySelector('.autocomplete')
-});
-createAutoComplete({
-    root: document.querySelector('.autocomplete-two')
-});
-createAutoComplete({
-    root: document.querySelector('.autocomplete-three')
+    root: document.querySelector('.autocomplete'),
+    renderOption(movie) { // how we want our options in the dropdown menu to look like
+        const imgSRC = movie.Poster === 'N/A' ? '' : movie.Poster; // if Poster is 'N/A' from the API
+        return `
+            <img src="${imgSRC}"/>
+            ${movie.Title} (${movie.Year})
+        `; // simply make changes to these dropdown menu options right here
+    }
 });
 
 

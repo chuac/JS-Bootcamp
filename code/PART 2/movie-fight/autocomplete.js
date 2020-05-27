@@ -1,4 +1,4 @@
-const createAutoComplete = ({root}) => {
+const createAutoComplete = ({root, renderOption}) => {
     // we now accept a root element
     root.innerHTML = `
         <label><b>Search For a Movie</b></label>
@@ -26,12 +26,9 @@ const createAutoComplete = ({root}) => {
         dropdown.classList.add('is-active'); // open the dropdown menu. Bulma CSS class
         for (let movie of movies) {
             const option = document.createElement('a'); // an option for the user to click on
-            const imgSRC = movie.Poster === 'N/A' ? '' : movie.Poster; // if Poster is 'N/A' from the API
+            
             option.classList.add('dropdown-item'); // Bulma CSS class
-            option.innerHTML = `
-                <img src="${imgSRC}"/>
-                ${movie.Title}
-            `;
+            option.innerHTML = renderOption(movie);
             option.addEventListener('click', () => {
                 dropdown.classList.remove('is-active'); // user clicked on an option so we close the dropdown menu
                 input.value = movie.Title; // update the input box with the user's selection
