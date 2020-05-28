@@ -30,8 +30,10 @@ Application Design Pattern: Plan of attack -> Setup boilerplate code -> Identify
 	To compare the movies, maybe we should store the movie data when we fetch/select it.
 		We inject the parsed data into the properties of each HTML article element under the data-value tag (aka dataset named value)
 
+JS with the Canvas API: 
+	Matter-js: by default, gravity is enabled in our simulation
+	Top left of our canvas element is (0, 0) where (x, y). X-axis goes horizontally to the right, Y-axis goes vertically downwards
+	Put a rectangle at all 4 edges of the World to create a border.
 
 
-
-
-10:40
+4pm
