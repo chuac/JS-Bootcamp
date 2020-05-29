@@ -40,5 +40,9 @@ JS with the Canvas API: Maze game
 			a value of 'true' means there's no wall there, a 'false' means there is a wall
 	Iterate over our verticals and horizontals array, and draw a rectangle (wall) at every false value
 
+Secret Message Sharing app: using Base64 character encoding to make it seem like a garbled secret message. in JS use: btoa() then atob()
+	URLs have 4 sections: domain, path, Query String, Hash/fragment
+		The Query String section is sent to the backend server. The Hash fragment only concerns the browser
+
 
 10:10
