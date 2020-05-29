@@ -44,5 +44,10 @@ Secret Message Sharing app: using Base64 character encoding to make it seem like
 	URLs have 4 sections: domain, path, Query String, Hash/fragment
 		The Query String section is sent to the backend server. The Hash fragment only concerns the browser
 
+Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into the Node REPL and then run JS code there (acts like the Console in browser)
+	Code cannot be naturally shared between .js files. Use module.export and require().
+	Our code gets passed in 5 "invisible" arguments: exports, require, module, __filename, __dirname. Display them by console.log(arguments);
+
 
 10:10
+5:50
