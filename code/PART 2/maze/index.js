@@ -17,7 +17,7 @@ const render = Render.create({
     element: document.body, // "go and render the representation of World inside document.body"
     engine: engine, // specify which engine to use
     options: {
-        wireframes: true, // setting to false will show solid shapes
+        wireframes: false, // setting to false will show solid shapes
         width: width,
         height: height
     }
@@ -132,7 +132,15 @@ horizontals.forEach((row, rowIndex) => { // grab each row in horizontals' 2D arr
         }
         const wallX = (columnIndex * unitLengthX) + (unitLengthX / 2); // X centerpoint for our wall
         const wallY = (rowIndex + 1) * unitLengthY; // Y centerpoint for our wall
-        const wall = Bodies.rectangle(wallX, wallY, unitLengthX, 5, {isStatic: true, label: 'wall'}); // horizontal walls have unitLength size in the X-axis
+        const wall = Bodies.rectangle(wallX, wallY, unitLengthX, 5, 
+            {
+                isStatic: true, 
+                label: 'wall',
+                render: {
+                    fillStyle: 'red'
+                }
+            }
+        ); // horizontal walls have unitLengthX size in the X-axis
         World.add(world, wall);
     });
 });
@@ -145,7 +153,15 @@ verticals.forEach((row, rowIndex) => { // grab each row in verticals' 2D array
         }
         const wallX = (columnIndex + 1) * unitLengthX; // X centerpoint for our wall
         const wallY = (rowIndex * unitLengthY) + (unitLengthY / 2); // Y centerpoint for our wall
-        const wall = Bodies.rectangle(wallX, wallY, 5, unitLengthY, {isStatic: true, label: 'wall'}); // vertical walls have unitLength size in the Y-axis
+        const wall = Bodies.rectangle(wallX, wallY, 5, unitLengthY, 
+            {
+                isStatic: true, 
+                label: 'wall',
+                render: {
+                    fillStyle: 'red'
+                }
+            }
+        ); // vertical walls have unitLengthY size in the Y-axis
         World.add(world, wall);
     });
 });
@@ -154,11 +170,14 @@ verticals.forEach((row, rowIndex) => { // grab each row in verticals' 2D array
 const goal = Bodies.rectangle(
     width - unitLengthX / 2, 
     height - unitLengthY / 2, 
-    unitLengthX * 0.7,
-    unitLengthY * 0.7,
+    ((unitLengthX + unitLengthY) / 2) * 0.7, // get the average of both sides, to look better
+    ((unitLengthX + unitLengthY) / 2) * 0.7,
     {
         label: 'goal', // we can access these labels later on in our collision event checker
-        isStatic: true
+        isStatic: true,
+        render: {
+            fillStyle: 'green'
+        }
     }
 );
 World.add(world, goal);
@@ -169,7 +188,10 @@ const ball = Bodies.circle(
     unitLengthY / 2,
     ((unitLengthX + unitLengthY) / 2) * 0.25, // radius is average of unitLength then multiply by a quarter
     {
-        label: 'ball'
+        label: 'ball',
+        render: {
+            fillStyle: 'blue'
+        }
     }
 );
 World.add(world, ball);
@@ -199,6 +221,7 @@ Events.on(engine, 'collisionStart', (event) => {
         const labels = ['ball', 'goal']; // quick way to use includes() later instead of many if-statements
 
         if (labels.includes(collision.bodyA.label) && labels.includes(collision.bodyA.label)) { // we'll add some fun animation if user wins the maze
+            document.querySelector('.winner').classList.remove('hidden'); // display our HTML and CSS when user won
             world.gravity.y = 1; // reintroduce gravity
             world.bodies.forEach((body) => { // iterate through all the bodies in the world
                 if (body.label === 'wall') { // find the ones we labelled walls
