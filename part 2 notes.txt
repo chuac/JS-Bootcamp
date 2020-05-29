@@ -57,6 +57,10 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 		Add a "bin" section, and declare what your program name is going to be, like "nls" for our ls-clone.
 		Run 'npm link' to link the project to everywhere on the computer
 
+	use fs.lstat to figure out if file vs folder.
+		Watch out because Node invokes callbacks (eg, in a for each loop) but it may take time for the hard drive to return those callback functions, meaning our
+			ouput could be in random order. Not good!
+
 
 10:10
 5:50

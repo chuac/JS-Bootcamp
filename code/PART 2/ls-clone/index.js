@@ -15,5 +15,16 @@ fs.readdir(process.cwd(), (err, filenames) => {
     if (err) { // if it even is defined (which would be if it's an error object)
         console.log(err);
     }
-    console.log(filenames);
+
+    // Purposely buggy implementation. Doesn't take into account the system may take time to return
+    // Our files when printed out could be in random order
+    for (let filename of filenames) {
+        //// https://nodejs.org/api/fs.html#fs_fs_lstat_path_options_callback
+        fs.lstat(filename, (err, stats) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log(filename, stats.isFile());
+        });
+    }
 });
