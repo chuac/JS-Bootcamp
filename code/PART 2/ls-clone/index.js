@@ -16,15 +16,26 @@ fs.readdir(process.cwd(), (err, filenames) => {
         console.log(err);
     }
 
-    // Purposely buggy implementation. Doesn't take into account the system may take time to return
-    // Our files when printed out could be in random order
+    const allStats = Array(filenames.length).fill(null);
+
     for (let filename of filenames) {
+        const index = filenames.indexOf(filename); // get loop index
+
         //// https://nodejs.org/api/fs.html#fs_fs_lstat_path_options_callback
         fs.lstat(filename, (err, stats) => {
             if (err) {
                 console.log(err);
             }
-            console.log(filename, stats.isFile());
+            allStats[index] = stats; // contain all the returned stats objects, dont print them first
+            const ready = allStats.every((stats) => { // will only return true if EVERY element in allStats is not a falsy value (not null)
+                return stats; // null or our actual object
+            });
+
+            if (ready) { // we have captured all the returned objects, now we print them out in correct order
+                allStats.forEach((stats, index) => {
+                    console.log(filenames[index], stats.isFile());
+                })
+            }
         });
     }
 });
