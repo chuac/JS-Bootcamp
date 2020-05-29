@@ -50,6 +50,12 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 	Require Cache: We only ever execute a file ONE TIME. Whatever you export from that file one-time into the cache is what you'll reference. require.cache
 		A second require statement won't run myscript.js again. You get the exact copy from the cache, from the first require statement.
 	Debugging: Run 'node --inspect-brk index.js'  and then access it with Chrome at 'chrome://inspect'
+	Node functions that take a callback always return the first argument as an error object, then the actual data in the second or third arguments
+	process.cwd() for current working directory has better cross-platform support, even though it works just like a '.' dot for path
+
+	package.json : create using npm init -y . Records some info about your project, 2 important sections: the "scripts" section and "dependencies" section.
+		Add a "bin" section, and declare what your program name is going to be, like "nls" for our ls-clone.
+		Run 'npm link' to link the project to everywhere on the computer
 
 
 10:10
