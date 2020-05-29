@@ -49,6 +49,7 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 	Our code gets passed in 5 "invisible" arguments: exports, require, module, __filename, __dirname. Display them by console.log(arguments);
 	Require Cache: We only ever execute a file ONE TIME. Whatever you export from that file one-time into the cache is what you'll reference. require.cache
 		A second require statement won't run myscript.js again. You get the exact copy from the cache, from the first require statement.
+	Debugging: Run 'node --inspect-brk index.js'  and then access it with Chrome at 'chrome://inspect'
 
 
 10:10
