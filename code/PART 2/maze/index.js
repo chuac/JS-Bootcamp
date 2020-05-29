@@ -23,12 +23,12 @@ Render.run(render);
 Runner.run(Runner.create(), engine);
 
 
-// Walls, now dynamically updates depending on height, width of the canvas
+// Border Walls, now dynamically updates depending on height, width of the canvas
 const walls = [
-    Bodies.rectangle(width / 2, 0, width, 40, {isStatic: true}), // top wall
-    Bodies.rectangle(width / 2, height, width, 40, {isStatic: true}), // bottom wall
-    Bodies.rectangle(0, height / 2, 40, height, {isStatic: true}), // left wall
-    Bodies.rectangle(width, height / 2, 40, height, {isStatic: true}), // right wall
+    Bodies.rectangle(width / 2, 0, width, 2, {isStatic: true}), // top wall, size 2 walls
+    Bodies.rectangle(width / 2, height, width, 2, {isStatic: true}), // bottom wall
+    Bodies.rectangle(0, height / 2, 2, height, {isStatic: true}), // left wall
+    Bodies.rectangle(width, height / 2, 2, height, {isStatic: true}), // right wall
 ];
 World.add(world, walls); // can also pass in an array of shapes/bodies
 
@@ -144,8 +144,28 @@ verticals.forEach((row, rowIndex) => { // grab each row in verticals' 2D array
             return;
         }
         const wallX = (columnIndex + 1) * unitLength; // X centerpoint for our wall
-        const wallY = (rowIndex + 0.5) * unitLength; // Y centerpoint for our wall
+        const wallY = (rowIndex * unitLength) + (unitLength / 2); // Y centerpoint for our wall
         const wall = Bodies.rectangle(wallX, wallY, 5, unitLength, {isStatic: true}); // vertical walls have unitLength size in the Y-axis
         World.add(world, wall);
     });
 });
+
+// Drawing a goal rectangle in the bottom right corner
+const goal = Bodies.rectangle(
+    width - unitLength / 2, 
+    height - unitLength / 2, 
+    unitLength * 0.7,
+    unitLength * 0.7,
+    {
+        isStatic: true
+    }
+);
+World.add(world, goal);
+
+// Drawing ball for user to control, starting at the top left corner
+const ball = Bodies.circle(
+    unitLength / 2,
+    unitLength / 2,
+    unitLength * 0.25 // radius
+);
+World.add(world, ball);
