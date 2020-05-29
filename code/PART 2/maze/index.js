@@ -1,8 +1,8 @@
 //console.log('hi');
 
-const { Engine, Render, Runner, World, Bodies, Body} = Matter; // Matter is imported from cdnjs
+const { Engine, Render, Runner, World, Bodies, Body, Events} = Matter; // Matter is imported from cdnjs
 
-const cells = 3; // number of cells in either x-axis or y-axis. doesn't matter since we're just doing square mazes
+const cells = 6; // number of cells in either x-axis or y-axis. doesn't matter since we're just doing square mazes
 const width = 600;
 const height = 600;
 
@@ -131,7 +131,7 @@ horizontals.forEach((row, rowIndex) => { // grab each row in horizontals' 2D arr
         }
         const wallX = (columnIndex * unitLength) + (unitLength / 2); // X centerpoint for our wall
         const wallY = (rowIndex + 1) * unitLength; // Y centerpoint for our wall
-        const wall = Bodies.rectangle(wallX, wallY, unitLength, 5, {isStatic: true}); // horizontal walls have unitLength size in the X-axis
+        const wall = Bodies.rectangle(wallX, wallY, unitLength, 5, {isStatic: true, label: 'wall'}); // horizontal walls have unitLength size in the X-axis
         World.add(world, wall);
     });
 });
@@ -144,7 +144,7 @@ verticals.forEach((row, rowIndex) => { // grab each row in verticals' 2D array
         }
         const wallX = (columnIndex + 1) * unitLength; // X centerpoint for our wall
         const wallY = (rowIndex * unitLength) + (unitLength / 2); // Y centerpoint for our wall
-        const wall = Bodies.rectangle(wallX, wallY, 5, unitLength, {isStatic: true}); // vertical walls have unitLength size in the Y-axis
+        const wall = Bodies.rectangle(wallX, wallY, 5, unitLength, {isStatic: true, label: 'wall'}); // vertical walls have unitLength size in the Y-axis
         World.add(world, wall);
     });
 });
@@ -156,6 +156,7 @@ const goal = Bodies.rectangle(
     unitLength * 0.7,
     unitLength * 0.7,
     {
+        label: 'goal', // we can access these labels later on in our collision event checker
         isStatic: true
     }
 );
@@ -165,14 +166,16 @@ World.add(world, goal);
 const ball = Bodies.circle(
     unitLength / 2,
     unitLength / 2,
-    unitLength * 0.25 // radius
+    unitLength * 0.25, // radius
+    {
+        label: 'ball'
+    }
 );
 World.add(world, ball);
 
 // handling keypresses, arrow keys or WASD
 document.addEventListener('keydown', (event) => {
-    const {x, y} = ball.velocity; // from MatterJS after we imported Body
-    console.log(x, y);
+    const {x, y} = ball.velocity; // ball's x and y velocities. from MatterJS after we imported Body
 
     if (event.keyCode === 38 || event.keyCode === 87) { // ArrowUp or W key
         Body.setVelocity(ball, {x, y: y - 5}); // keep x as it is, but give it negative velocity in the y-axis
@@ -186,4 +189,21 @@ document.addEventListener('keydown', (event) => {
     if (event.keyCode === 37 || event.keyCode === 65) { // ArrowLeft or A key
         Body.setVelocity(ball, {x: x - 5, y}); // subtract velocity in the x-axis
     }
+});
+
+// Detecting a Win
+Events.on(engine, 'collisionStart', (event) => {
+    
+    event.pairs.forEach((collision) => { // each collision event has a pairs object
+        const labels = ['ball', 'goal']; // quick way to use includes() later instead of many if-statements
+
+        if (labels.includes(collision.bodyA.label) && labels.includes(collision.bodyA.label)) { // we'll add some fun animation if user wins the maze
+            world.gravity.y = 1; // reintroduce gravity
+            world.bodies.forEach((body) => { // iterate through all the bodies in the world
+                if (body.label === 'wall') { // find the ones we labelled walls
+                    Body.setStatic(body, false); // remove their isStatic property
+                }
+            });
+        };
+    });
 });
