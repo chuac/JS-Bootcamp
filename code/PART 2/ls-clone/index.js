@@ -39,14 +39,16 @@ fs.readdir(process.cwd(), async (err, filenames) => {
         console.log(err);
     }
 
-    for (let filename of filenames) {
-        try {
-            const stats = await lstat(filename);
+    const statPromises = filenames.map((filename) => { // array that contains Promises of each lstat call
+        return lstat(filename); // send all the requests for lstat
+    });
 
-            console.log(filename, stats.isFile());
-        } catch (err) {
-            console.log(err);
-        }
+    const allStats = await Promise.all(statPromises); // wait for all the Promises to (hopefully) resolve, and save their resolved data in an array
+
+    for (let stats of allStats) { // iterate over the resolved data
+        const index = allStats.indexOf(stats); // get an index to access filenames
+
+        console.log(filenames[index], stats.isFile());
     }
  
 });
