@@ -2,11 +2,13 @@
 
 const { Engine, Render, Runner, World, Bodies, Body, Events} = Matter; // Matter is imported from cdnjs
 
-const cells = 6; // number of cells in either x-axis or y-axis. doesn't matter since we're just doing square mazes
-const width = 600;
-const height = 600;
+const cellsHorizontal = 10; // columns
+const cellsVertical = 5; // rows
+const width = window.innerWidth;
+const height = window.innerHeight;
 
-const unitLength = width / cells; // pr height / cells
+const unitLengthX = width / cellsHorizontal;
+const unitLengthY = height / cellsVertical;
 
 const engine = Engine.create();
 engine.world.gravity.y = 0; // disable gravity in the y direction
@@ -51,7 +53,6 @@ const shuffle = (arr) => { // swap with values at random indexes, working from t
 }
 
 // const grid = [];
-
 // for (let i = 0; i < 3; i++) {
 //     grid.push([]);
 //     for (let j = 0; j < 3; j++) {
@@ -60,13 +61,13 @@ const shuffle = (arr) => { // swap with values at random indexes, working from t
 // }
 // Could also generate mazes with above code
 
-// comments are assuming cells is 3
-const grid = Array(cells).fill(null).map(() => Array(cells).fill(false));
+// comments are assuming cells is 3 by 3
+const grid = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
 // ^ we can't just do Array(3).fill([false, false, false]) because it'd fill in 3 arrays that point to the one [false, false, false] in memory.
 
-const verticals = Array(cells).fill(null).map(() => Array(cells - 1).fill(false)); // 3 vertical walls per column but only 2 columns of vertical walls
+const verticals = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal).fill(false)); // 3 vertical walls per column but only 2 columns of vertical walls
 
-const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(false)); // 2 rows of horizontal walls but 3 horizontal walls per row 
+const horizontals = Array(cellsVertical - 1).fill(null).map(() => Array(cellsHorizontal).fill(false)); // 2 rows of horizontal walls but 3 horizontal walls per row 
 
 
 
@@ -92,7 +93,7 @@ const stepThroughCell = (row, column) => {
         const [neighRow, neighColumn, direction] = neighbour; // destructuring, could also do neighbour[0], and neighbour[1]
     
         // see if that neighbour is out of bounds
-        if ((neighRow < 0 || neighColumn < 0) || (neighRow >= cells || neighColumn >= cells)) {
+        if ((neighRow < 0 || neighColumn < 0) || (neighRow >= cellsVertical || neighColumn >= cellsHorizontal)) {
             continue; // do nothing and continue since these neighbours are out of bounds
         }
 
@@ -118,8 +119,8 @@ const stepThroughCell = (row, column) => {
     
 };
 
-const startRow = Math.floor(Math.random() * cells);
-const startColumn = Math.floor(Math.random() * cells);
+const startRow = Math.floor(Math.random() * cellsVertical);
+const startColumn = Math.floor(Math.random() * cellsHorizontal);
 stepThroughCell(startRow, startColumn); // start generating maze at random position
 
 
@@ -129,9 +130,9 @@ horizontals.forEach((row, rowIndex) => { // grab each row in horizontals' 2D arr
         if (open) { // i.e, if open === true, no wall here
             return;
         }
-        const wallX = (columnIndex * unitLength) + (unitLength / 2); // X centerpoint for our wall
-        const wallY = (rowIndex + 1) * unitLength; // Y centerpoint for our wall
-        const wall = Bodies.rectangle(wallX, wallY, unitLength, 5, {isStatic: true, label: 'wall'}); // horizontal walls have unitLength size in the X-axis
+        const wallX = (columnIndex * unitLengthX) + (unitLengthX / 2); // X centerpoint for our wall
+        const wallY = (rowIndex + 1) * unitLengthY; // Y centerpoint for our wall
+        const wall = Bodies.rectangle(wallX, wallY, unitLengthX, 5, {isStatic: true, label: 'wall'}); // horizontal walls have unitLength size in the X-axis
         World.add(world, wall);
     });
 });
@@ -142,19 +143,19 @@ verticals.forEach((row, rowIndex) => { // grab each row in verticals' 2D array
         if (open) { // i.e, if open === true, no wall here
             return;
         }
-        const wallX = (columnIndex + 1) * unitLength; // X centerpoint for our wall
-        const wallY = (rowIndex * unitLength) + (unitLength / 2); // Y centerpoint for our wall
-        const wall = Bodies.rectangle(wallX, wallY, 5, unitLength, {isStatic: true, label: 'wall'}); // vertical walls have unitLength size in the Y-axis
+        const wallX = (columnIndex + 1) * unitLengthX; // X centerpoint for our wall
+        const wallY = (rowIndex * unitLengthY) + (unitLengthY / 2); // Y centerpoint for our wall
+        const wall = Bodies.rectangle(wallX, wallY, 5, unitLengthY, {isStatic: true, label: 'wall'}); // vertical walls have unitLength size in the Y-axis
         World.add(world, wall);
     });
 });
 
 // Drawing a goal rectangle in the bottom right corner
 const goal = Bodies.rectangle(
-    width - unitLength / 2, 
-    height - unitLength / 2, 
-    unitLength * 0.7,
-    unitLength * 0.7,
+    width - unitLengthX / 2, 
+    height - unitLengthY / 2, 
+    unitLengthX * 0.7,
+    unitLengthY * 0.7,
     {
         label: 'goal', // we can access these labels later on in our collision event checker
         isStatic: true
@@ -164,9 +165,9 @@ World.add(world, goal);
 
 // Drawing ball for user to control, starting at the top left corner
 const ball = Bodies.circle(
-    unitLength / 2,
-    unitLength / 2,
-    unitLength * 0.25, // radius
+    unitLengthX / 2,
+    unitLengthY / 2,
+    ((unitLengthX + unitLengthY) / 2) * 0.25, // radius is average of unitLength then multiply by a quarter
     {
         label: 'ball'
     }
