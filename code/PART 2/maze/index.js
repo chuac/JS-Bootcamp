@@ -120,19 +120,32 @@ const stepThroughCell = (row, column) => {
 
 const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
-stepThroughCell(startRow, startColumn);
+stepThroughCell(startRow, startColumn); // start generating maze at random position
 console.log(horizontals);
 console.log(verticals);
 
+// draw horizontal walls
 horizontals.forEach((row, rowIndex) => { // grab each row in horizontals' 2D array
     row.forEach((open, columnIndex) => { // get each wall value in that row
         if (open) { // i.e, if open === true, no wall here
             return;
         }
-        console.log(columnIndex, rowIndex);
         const wallX = (columnIndex * unitLength) + (unitLength / 2); // X centerpoint for our wall
         const wallY = (rowIndex + 1) * unitLength; // Y centerpoint for our wall
-        const wall = Bodies.rectangle(wallX, wallY, unitLength, 10, {isStatic: true}); // horizontal walls have unitLength size in the X-axis
+        const wall = Bodies.rectangle(wallX, wallY, unitLength, 5, {isStatic: true}); // horizontal walls have unitLength size in the X-axis
+        World.add(world, wall);
+    });
+});
+
+// draw vertical walls
+verticals.forEach((row, rowIndex) => { // grab each row in verticals' 2D array
+    row.forEach((open, columnIndex) => { // get each wall value in that row
+        if (open) { // i.e, if open === true, no wall here
+            return;
+        }
+        const wallX = (columnIndex + 1) * unitLength; // X centerpoint for our wall
+        const wallY = (rowIndex + 0.5) * unitLength; // Y centerpoint for our wall
+        const wall = Bodies.rectangle(wallX, wallY, 5, unitLength, {isStatic: true}); // vertical walls have unitLength size in the Y-axis
         World.add(world, wall);
     });
 });
