@@ -64,6 +64,7 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 			Option #2: could wrap lstat in Promise traditionally, or Node's util.promisify(), or even easier: using FsPromises.
 				BUT Option #2 runs in serial! Only one lstat call at a time. No parallel performance
 			Option #3: Promise.all to run in parallel
+		Use Chalk library to console.log in colour
 
 
 10:10
