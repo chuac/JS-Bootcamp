@@ -6,6 +6,8 @@ const cells = 3; // number of cells in either x-axis or y-axis. doesn't matter s
 const width = 600;
 const height = 600;
 
+const unitLength = width / cells; // pr height / cells
+
 const engine = Engine.create();
 const { world } = engine; // when you create an engine, you get a world along with it
 const render = Render.create({
@@ -67,9 +69,6 @@ const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(fals
 
 
 
-const startRow = Math.floor(Math.random() * cells);
-const startColumn = Math.floor(Math.random() * cells);
-
 
 const stepThroughCell = (row, column) => {
     // if I have visited the cell at [row, column], then return
@@ -91,15 +90,17 @@ const stepThroughCell = (row, column) => {
     // for each neighbour..
     for (let neighbour of neighbours) {
         const [neighRow, neighColumn, direction] = neighbour; // destructuring, could also do neighbour[0], and neighbour[1]
-    // see if that neighbour is out of bounds
+    
+        // see if that neighbour is out of bounds
         if ((neighRow < 0 || neighColumn < 0) || (neighRow >= cells || neighColumn >= cells)) {
-            console.log(neighbour, "out of bounds");
             continue; // do nothing and continue since these neighbours are out of bounds
         }
+
     // if we have visited that neighbour, continue to next neighbour
         if (grid[neighRow][neighColumn]) {
             continue;
         }
+
     // remove the wall between here and neighbour, from either horizontals or verticals array
         if (direction === 'left') { // moving left or right will impact only vertical walls
             verticals[row][column - 1] = true; // moving left or right doesn't impact row
@@ -110,9 +111,28 @@ const stepThroughCell = (row, column) => {
         } else if (direction === 'down') {
             horizontals[row][column] = true;
         }
-    }
+
     // visit that next cell (by calling stepThroughCell())
+        stepThroughCell(neighRow, neighColumn); // recursion
+    }
+    
 };
 
-stepThroughCell(1, 1);
-//console.log(horizontals);
+const startRow = Math.floor(Math.random() * cells);
+const startColumn = Math.floor(Math.random() * cells);
+stepThroughCell(startRow, startColumn);
+console.log(horizontals);
+console.log(verticals);
+
+horizontals.forEach((row, rowIndex) => { // grab each row in horizontals' 2D array
+    row.forEach((open, columnIndex) => { // get each wall value in that row
+        if (open) { // i.e, if open === true, no wall here
+            return;
+        }
+        console.log(columnIndex, rowIndex);
+        const wallX = (columnIndex * unitLength) + (unitLength / 2); // X centerpoint for our wall
+        const wallY = (rowIndex + 1) * unitLength; // Y centerpoint for our wall
+        const wall = Bodies.rectangle(wallX, wallY, unitLength, 10, {isStatic: true}); // horizontal walls have unitLength size in the X-axis
+        World.add(world, wall);
+    });
+});

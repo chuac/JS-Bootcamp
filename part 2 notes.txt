@@ -38,6 +38,7 @@ JS with the Canvas API: Maze game
 		'grid' array will keep track of which cell has been visited: 'false' means not visited before
 		'verticals' array will keep track of walls going up and down, 'horizontals' array will keep track of walls going side to side
 			a value of 'true' means there's no wall there, a 'false' means there is a wall
+	Iterate over our verticals and horizontals array, and draw a rectangle (wall) at every false value
 
 
 10:10
