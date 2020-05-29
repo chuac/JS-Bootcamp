@@ -32,6 +32,21 @@ World.add(world, walls); // can also pass in an array of shapes/bodies
 
 // Maze generation
 
+const shuffle = (arr) => { // swap with values at random indexes, working from the back
+    let counter = arr.length;
+
+    while (counter > 0) {
+        const index = Math.floor(Math.random() * counter);
+
+        counter--;
+
+        const temp = arr[counter];
+        arr[counter] = arr[index];
+        arr[index] = temp;
+    }
+    return arr;
+}
+
 // const grid = [];
 
 // for (let i = 0; i < 3; i++) {
@@ -50,4 +65,54 @@ const verticals = Array(cells).fill(null).map(() => Array(cells - 1).fill(false)
 
 const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(false)); // 2 rows of horizontal walls but 3 horizontal walls per row 
 
-console.log(grid, verticals, horizontals);
+
+
+const startRow = Math.floor(Math.random() * cells);
+const startColumn = Math.floor(Math.random() * cells);
+
+
+const stepThroughCell = (row, column) => {
+    // if I have visited the cell at [row, column], then return
+    if (grid[row][column]) { // true means we've visited here, so get out of here
+        return;
+    }
+
+    // mark this cell as being visited
+    grid[row][column] = true;
+
+    // assemble randomly-ordered list of neightbours, calling our shuffle() function
+    const neighbours = shuffle([
+        [row - 1, column, 'up'], // cell above
+        [row + 1, column, 'down'], // cell below
+        [row, column + 1, 'right'], // cell in column to the right
+        [row, column - 1, 'left'] // cell column to the left
+    ]);
+
+    // for each neighbour..
+    for (let neighbour of neighbours) {
+        const [neighRow, neighColumn, direction] = neighbour; // destructuring, could also do neighbour[0], and neighbour[1]
+    // see if that neighbour is out of bounds
+        if ((neighRow < 0 || neighColumn < 0) || (neighRow >= cells || neighColumn >= cells)) {
+            console.log(neighbour, "out of bounds");
+            continue; // do nothing and continue since these neighbours are out of bounds
+        }
+    // if we have visited that neighbour, continue to next neighbour
+        if (grid[neighRow][neighColumn]) {
+            continue;
+        }
+    // remove the wall between here and neighbour, from either horizontals or verticals array
+        if (direction === 'left') { // moving left or right will impact only vertical walls
+            verticals[row][column - 1] = true; // moving left or right doesn't impact row
+        } else if (direction === 'right') {
+            verticals[row][column] = true;
+        } else if (direction === 'up') { // moving up or down will impact only horizontal walls
+            horizontals[row - 1][column] = true; // moving up or down doesn't impact which column of walls you're in
+        } else if (direction === 'down') {
+            horizontals[row][column] = true;
+        }
+    }
+    // visit that next cell (by calling stepThroughCell())
+};
+
+stepThroughCell(1, 1);
+//console.log(horizontals);

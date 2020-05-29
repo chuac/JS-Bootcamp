@@ -35,8 +35,9 @@ JS with the Canvas API: Maze game
 	Top left of our canvas element is (0, 0) where (x, y). X-axis goes horizontally to the right, Y-axis goes vertically downwards
 	Put a rectangle at all 4 edges of the World to create a border.
 	Our maze generations are using a 2D Array
+		'grid' array will keep track of which cell has been visited: 'false' means not visited before
 		'verticals' array will keep track of walls going up and down, 'horizontals' array will keep track of walls going side to side
 			a value of 'true' means there's no wall there, a 'false' means there is a wall
 
 
-4pm
+10:10
