@@ -61,6 +61,8 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 		Watch out because Node invokes callbacks (eg, in a for each loop) but it may take time for the hard drive to return those callback functions, meaning our
 			ouput could be in random order. Not good!
 		3 options on a proper implementation. 2 sub-optimal, 1 preferred.
+			Option #2: could wrap lstat in Promise traditionally, or Node's util.promisify(), or even easier: using FsPromises.
+				BUT Option #2 runs in serial! Only one lstat call at a time. No parallel performance
 
 
 10:10
