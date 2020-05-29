@@ -1,6 +1,6 @@
 //console.log('hi');
 
-const { Engine, Render, Runner, World, Bodies, } = Matter; // Matter is imported from cdnjs
+const { Engine, Render, Runner, World, Bodies, Body} = Matter; // Matter is imported from cdnjs
 
 const cells = 3; // number of cells in either x-axis or y-axis. doesn't matter since we're just doing square mazes
 const width = 600;
@@ -9,6 +9,7 @@ const height = 600;
 const unitLength = width / cells; // pr height / cells
 
 const engine = Engine.create();
+engine.world.gravity.y = 0; // disable gravity in the y direction
 const { world } = engine; // when you create an engine, you get a world along with it
 const render = Render.create({
     element: document.body, // "go and render the representation of World inside document.body"
@@ -69,7 +70,6 @@ const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(fals
 
 
 
-
 const stepThroughCell = (row, column) => {
     // if I have visited the cell at [row, column], then return
     if (grid[row][column]) { // true means we've visited here, so get out of here
@@ -121,8 +121,7 @@ const stepThroughCell = (row, column) => {
 const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
 stepThroughCell(startRow, startColumn); // start generating maze at random position
-console.log(horizontals);
-console.log(verticals);
+
 
 // draw horizontal walls
 horizontals.forEach((row, rowIndex) => { // grab each row in horizontals' 2D array
@@ -169,3 +168,22 @@ const ball = Bodies.circle(
     unitLength * 0.25 // radius
 );
 World.add(world, ball);
+
+// handling keypresses, arrow keys or WASD
+document.addEventListener('keydown', (event) => {
+    const {x, y} = ball.velocity; // from MatterJS after we imported Body
+    console.log(x, y);
+
+    if (event.keyCode === 38 || event.keyCode === 87) { // ArrowUp or W key
+        Body.setVelocity(ball, {x, y: y - 5}); // keep x as it is, but give it negative velocity in the y-axis
+    }
+    if (event.keyCode === 40 || event.keyCode === 83) { // ArrowDown or S key
+        Body.setVelocity(ball, {x, y: y + 5}); // add velocity in the y-axis
+    }
+    if (event.keyCode === 39 || event.keyCode === 68) { // ArrowRight or D key
+        Body.setVelocity(ball, {x: x + 5, y}); // add velocity in the x-axis
+    }
+    if (event.keyCode === 37 || event.keyCode === 65) { // ArrowLeft or A key
+        Body.setVelocity(ball, {x: x - 5, y}); // subtract velocity in the x-axis
+    }
+});
