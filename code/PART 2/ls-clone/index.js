@@ -5,6 +5,9 @@
 const fs = require('fs'); // File System module in Node is abbreviated as fs
 // the Process module is automatically included in every file
 
+//// https://www.npmjs.com/package/chalk
+const chalk = require('chalk');
+
 
 //// Method #1. Wrapping lstat inside a Promise
 // const lstat = (filename) => {
@@ -48,7 +51,11 @@ fs.readdir(process.cwd(), async (err, filenames) => {
     for (let stats of allStats) { // iterate over the resolved data
         const index = allStats.indexOf(stats); // get an index to access filenames
 
-        console.log(filenames[index], stats.isFile());
+        if (stats.isFile()) {
+            console.log(chalk.white.bold(filenames[index]));
+        } else if (stats.isDirectory()) {
+            console.log(chalk.green.bold(filenames[index])); // using chalk library to show folders as green and bold
+        }
     }
  
 });
