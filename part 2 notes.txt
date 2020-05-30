@@ -83,6 +83,7 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and value of how the code would be executed...like "nodemon index.js". Then run 'npm run dev'
 	Methods of requests are intents. Like GET
 	Express is a router. Works with browser and if the response you're returning looks like HTML (template string literal), the browser will treat it as such
+	When making POST requests, the Request Body instead takes the form data, instead of in the URL
 
 
 
