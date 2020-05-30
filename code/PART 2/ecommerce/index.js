@@ -1,6 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true} )); // now every single route handler will be parsed by this
 
 app.get('/', (req, res) => { // request, response...at the root route
     res.send(`
@@ -15,25 +18,8 @@ app.get('/', (req, res) => { // request, response...at the root route
     `);
 });
 
-const bodyParser = (req, res, next) => {
-    if (req.method === 'POST') { // the method property inside the req object
-        req.on('data', (data) => { // 'on' can be thought of as an addEventListener listening on the 'data' event
-        const parsed = data.toString('utf8').split('&');; // 'data' is just a data Buffer, need to convert it
-        const formData = {};
-        for (let pair of parsed) {
-            const [key, value] = pair.split('='); // destructuring split output into key and value variables
-            formData[key] = value;
-        }
-        req.body = formData;
-        next(); // Express callback function given to us. Tell Express we are done here with our Middleware
-        });
-    } else {
-        next();
-    }
-    
-}
 
-app.post('/', bodyParser, (req, res) => {
+app.post('/', bodyParser.urlencoded({ extended: true} ), (req, res) => { // we could add our bodyParser Middleware here or up above in 'app.use'!
     
     console.log(req.body);
     res.send('Account created');
