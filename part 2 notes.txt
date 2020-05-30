@@ -75,5 +75,9 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 		Chokidar detects an add event for every single file it finds when it first runs. So we need a debouncer to prevent so many executions on first run.
 		Caporal: options or arguments in <> angled brackets are mandatory, [] square brackets optional
 			The command 'watchit -h' can be used straight away to see the help page
+		Child Processes: exec(), execFile(), fork(), spawn() are all very very similar.
+			The spawn() function takes an options object named 'stdio'. Stdio supports a string 'inherit' where all console.logs/errors created by the
+				child process will be inherited back to the parent program.
+			spawn() returns a ChildProcess object that has methods attached to it, like kill()
 
 11:20
