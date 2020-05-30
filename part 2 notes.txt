@@ -73,6 +73,7 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 		JS code from within a JS program?
 		Use Chokidar and Caporal packages from NPM, for issue #1, and #2. Child Processes Node module for issue #3.
 		Chokidar detects an add event for every single file it finds when it first runs. So we need a debouncer to prevent so many executions on first run.
-	
+		Caporal: options or arguments in <> angled brackets are mandatory, [] square brackets optional
+			The command 'watchit -h' can be used straight away to see the help page
 
 11:20
