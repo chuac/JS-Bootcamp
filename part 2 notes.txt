@@ -66,6 +66,13 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 			Option #3: Promise.all to run in parallel
 		Use Chalk library to console.log in colour
 
+	Steps to link a .js file as a terminal executable: Add '#!/usr/bin/env node' comment to top of .js file, run 'npm init -y' in terminal, add a 'bin' object to 
+		the newly created package.json. The bin object will contain a key of name of your executable, and value of your .js file name.
+	
+	Watch-it project runner app: 3 implementation issues: Need to detect when file changes, would be nice for CLI help for new users of our tool, how to execute
+		JS code from within a JS program?
+		Use Chokidar and Caporal packages from NPM, for issue #1, and #2. Child Processes Node module for issue #3.
+		Chokidar detects an add event for every single file it finds when it first runs. So we need a debouncer to prevent so many executions on first run.
+	
 
-10:10
-5:50
+11:20
