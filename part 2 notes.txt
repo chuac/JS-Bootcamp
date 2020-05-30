@@ -80,4 +80,10 @@ Node: Run 'node index.js' in Command Line Interface, or type 'node' to get into 
 				child process will be inherited back to the parent program.
 			spawn() returns a ChildProcess object that has methods attached to it, like kill()
 
-11:20
+Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and value of how the code would be executed...like "nodemon index.js". Then run 'npm run dev'
+	Methods of requests are intents. Like GET
+
+
+
+
+2:10
