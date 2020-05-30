@@ -84,7 +84,8 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 	Methods of requests are intents. Like GET
 	Express is a router. Works with browser and if the response you're returning looks like HTML (template string literal), the browser will treat it as such
 	When making POST requests, the Request Body instead takes the form data, instead of in the URL
-
+	Middleware! : Function that does pre-processing on the 'req' and 'res' objects. Allows code re-use in Express. They are functions that are in the middle of a 
+		request handler.
 
 
 2:10
