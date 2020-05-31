@@ -1,20 +1,12 @@
 const express = require('express');
 const usersRepo = require('../../repositories/users'); // import in from our UsersRepo we created
+const signupTemplate = require('../../views/admin/auth/signup');
+const signinTemplate = require('../../views/admin/auth/signin');
 
 const router = express.Router(); // instead of app, this Router will link it back to where app is created in index.js
 
 router.get('/signup', (req, res) => { // request, response...at the root route
-    res.send(`
-        <div>
-            Your ID is: ${req.session.userId}
-            <form method="POST">
-                <input name="email" placeholder="email" />
-                <input name="password" placeholder="password" />
-                <input name="passwordConfirmation" placeholder="password confirmation" />
-                <button>Sign Up</button>
-            </form>
-        </div>
-    `);
+    res.send(signupTemplate({ req })); // signup template needs req object
 });
 
 router.post('/signup', async (req, res) => { // we could add our bodyParser Middleware here or up above in 'router.use'!
@@ -45,15 +37,7 @@ router.get('/signout', (req, res) => {
 
 
 router.get('/signin', (req, res) => {
-    res.send(`
-        <div>
-            <form method="POST">
-                <input name="email" placeholder="email" />
-                <input name="password" placeholder="password" />
-                <button>Sign In</button>
-            </form>
-        </div>
-    `);
+    res.send(signinTemplate());
 });
 
 router.post('/signin', async (req, res) => {
