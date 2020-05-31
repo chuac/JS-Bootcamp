@@ -17,7 +17,13 @@ router.post('/signup',
             .trim()
             .normalizeEmail()
             .isEmail()
-            .withMessage('Must be a valid email'),
+            .withMessage('Must be a valid email')
+            .custom(async (email) => {
+                const existingUser = await usersRepo.getOneBy({ email }); // key and variable value are the same so can write short-hand
+                if (existingUser) {
+                    throw new Error('Email already in use');
+                }
+            }),
         check('password')
             .trim()
             .isLength({ min: 4, max: 20})
@@ -26,21 +32,21 @@ router.post('/signup',
             .trim()
             .isLength({ min: 4, max: 20})
             .withMessage('Must be between 4 and 20 characters')
+            .custom((passwordConfirmation, { req }) => {
+                if (passwordConfirmation != req.body.password) {
+                    throw new Error('Passwords must match');
+                }
+            })
     ], 
     async (req, res) => { // we could add our bodyParser Middleware here or up above in 'router.use'!
         const errors = validationResult(req); // errors is array of objects
-        console.log(errors);
+        if (!errors.isEmpty()) {
+            console.log(errors);
+            return res.status(422).json({ errors: errors.array() });
+        }
+        
         const { email, password, passwordConfirmation } = req.body; // all form data is contained inside req.body
 
-        const existingUser = await usersRepo.getOneBy({ email }); // key and variable value are the same so can write short-hand
-        if (existingUser) {
-            return res.send('Email already in use');
-        }
-
-        if (password !== passwordConfirmation) {
-            return res.send('Passwords must match');
-        }
-        console.log(req.body);
 
         // Create a user in our user repo to represent this person
         const user = await usersRepo.create({ email, password });
