@@ -83,21 +83,4 @@ class UsersRepository {
     }
 }
 
-const test = async () => {
-    const repo = new UsersRepository('users.json');
-
-    // await repo.create({
-    //     email: "test@test.com",
-    //     password: "password"
-    // })
-
-    
-    //const user = await repo.delete('570b6651');
-    const user = await repo.getOneBy({name: 'James'});
-    const users = await repo.getAll();
-    console.log(user);
-
-
-}
-test();
-
+module.exports = new UsersRepository('users.json'); // export an Instance of our class to be used elsewhere

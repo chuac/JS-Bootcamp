@@ -89,6 +89,7 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 	Custom database: Users repository and Products repository. A repository will be a single Class that is the gatekeeper responsible for data access. It'll have methods
 		like getByID(), getAll(), delete(), etc. All data is stored as plain JS objects, in a .json file
 	Constructor functions in JS Classes aren't allowed to be async. Since we're only creating the repo once, we can use "sync" version of fs.accessSync()
+	Best practice to export an Instance of the Class, instead of the whole file. Like module.exports = new UsersRepository('users.json');
 
 
 2:10
