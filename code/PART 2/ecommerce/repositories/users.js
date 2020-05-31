@@ -1,5 +1,8 @@
 const fs = require('fs');
 const crypto = require('crypto');
+const util = require('util');
+
+const scrypt = util.promisify(crypto.scrypt); // since the regular scrypt deals with callback functions, we'll wrap it with promisify
 
 class UsersRepository {
     constructor(filename) { // not allowed to have async code in here
@@ -21,15 +24,23 @@ class UsersRepository {
         return JSON.parse(await fs.promises.readFile(this.filename, { encoding: 'utf8' }));
     }
 
-    async create(attrs) { // attrs is an attributes object of the new user
+    async create(attrs) { // attrs is an attributes object of the new user. like {email: '', password:''}
         attrs.id = this.randomId();
 
+        const salt = crypto.randomBytes(8).toString('hex'); // random numbers and letters for our pw salt
+        const buffer = await scrypt(attrs.password, salt, 64);
+        const hashed = buffer.toString('hex');
+        
         const records = await this.getAll();
-        records.push(attrs);
+        const record = {
+            ...attrs, // spread attrs into this new object but..
+            password: `${hashed}.${salt}` // ..also replace the password key: value that was in attrs with this new value
+        };
+        records.push(record); // push this new record object that has the properly hashed/salted password
 
         await this.writeAll(records);
 
-        return attrs;
+        return record;
     }
 
     async writeAll(records) {
