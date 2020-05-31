@@ -24,7 +24,7 @@ app.get('/', (req, res) => { // request, response...at the root route
 app.post('/', async (req, res) => { // we could add our bodyParser Middleware here or up above in 'app.use'!
     const { email, password, passwordConfirmation } = req.body;
 
-    const existingUser = await usersRepo.getOneBy({ email });
+    const existingUser = await usersRepo.getOneBy({ email }); // key and variable value are the same so can write short-hand
     if (existingUser) {
         return res.send('Email already in use');
     }
@@ -33,6 +33,11 @@ app.post('/', async (req, res) => { // we could add our bodyParser Middleware he
         return res.send('Passwords must match');
     }
     console.log(req.body);
+
+    // Create a user in our user repo to represent this person
+    const user = await usersRepo.create({ email, password });
+    // Store the id of that user inside the users cookie
+
     res.send('Account created');
 });
 
