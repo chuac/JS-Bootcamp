@@ -1,15 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session'); // also a middleware function
 
 const usersRepo = require('./repositories/users'); // import in from our UsersRepo we created
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true} )); // now every single route handler will be parsed by this
+app.use(cookieSession({
+    keys: ['eagsgdsfjdgaifieaflayaaq']
+})); // cookie-session will encrypt the info we store in the cookie, when we provide a key string
 
 app.get('/', (req, res) => { // request, response...at the root route
     res.send(`
         <div>
+            Your ID is: ${req.session.userId}
             <form method="POST">
                 <input name="email" placeholder="email" />
                 <input name="password" placeholder="password" />
@@ -37,7 +42,7 @@ app.post('/', async (req, res) => { // we could add our bodyParser Middleware he
     // Create a user in our user repo to represent this person
     const user = await usersRepo.create({ email, password });
     // Store the id of that user inside the users cookie
-
+    req.session.userId = user.id; // req.session is an object added by cookie-session library!
     res.send('Account created');
 });
 

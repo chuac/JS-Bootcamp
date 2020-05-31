@@ -90,12 +90,10 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 		like getByID(), getAll(), delete(), etc. All data is stored as plain JS objects, in a .json file
 	Constructor functions in JS Classes aren't allowed to be async. Since we're only creating the repo once, we can use "sync" version of fs.accessSync()
 	Best practice to export an Instance of the Class, instead of the whole file. Like module.exports = new UsersRepository('users.json');
-<<<<<<< HEAD
 
 	Cookies: After an initial request from the browser to server, the server can return a response with a cookie. Tells the browser to please include the cookie
 		with every followup request
-=======
->>>>>>> e96ec27db88f3c9e9a605db69fa5c1fbfe2696ef
+		We don't want to allow a user to be able to modify their cookie and pretend that they are someone they're not.
 
 
 2:10
