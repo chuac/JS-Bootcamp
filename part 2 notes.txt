@@ -86,6 +86,13 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 	When making POST requests, the Request Body instead takes the form data, instead of in the URL
 	Middleware! : Function that does pre-processing on the 'req' and 'res' objects. Allows code re-use in Express. They are functions that are in the middle of a 
 		request handler.
+	Custom database: Users repository and Products repository. A repository will be a single Class that is the gatekeeper responsible for data access. It'll have methods
+		like getByID(), getAll(), delete(), etc. All data is stored as plain JS objects, in a .json file
+	Constructor functions in JS Classes aren't allowed to be async. Since we're only creating the repo once, we can use "sync" version of fs.accessSync()
+	Best practice to export an Instance of the Class, instead of the whole file. Like module.exports = new UsersRepository('users.json');
+
+	Cookies: After an initial request from the browser to server, the server can return a response with a cookie. Tells the browser to please include the cookie
+		with every followup request
 
 
 2:10
