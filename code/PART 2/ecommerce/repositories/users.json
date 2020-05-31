@@ -1,1 +1,38 @@
-[{"email":"test@test.com","password":"password"}]
+[
+  {
+    "email": "test@test.com",
+    "password": "password",
+    "id": "ee0ad78c"
+  },
+  {
+    "email": "test@test.com",
+    "password": "password",
+    "id": "35e33f0b"
+  },
+  {
+    "email": "test@test.com",
+    "password": "password",
+    "id": "e81cf0fd",
+    "name": "James"
+  },
+  {
+    "email": "test@test.com",
+    "password": "password",
+    "id": "686f31a2"
+  },
+  {
+    "email": "test@test.com",
+    "password": "password",
+    "id": "1f9a1ea6"
+  },
+  {
+    "email": "test@test.com",
+    "password": "password",
+    "id": "213bf7d8"
+  },
+  {
+    "email": "test@test.com",
+    "password": "password",
+    "id": "1049bedd"
+  }
+]
