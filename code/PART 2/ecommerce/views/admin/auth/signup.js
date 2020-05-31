@@ -1,5 +1,7 @@
+const layout = require('../layout');
+
 module.exports = ({ req }) => { // assuming we'll pass in an object that has the req property
-    return `
+    const content = `
         <div>
             Your ID is: ${req.session.userId}
             <form method="POST">
@@ -10,4 +12,5 @@ module.exports = ({ req }) => { // assuming we'll pass in an object that has the
             </form>
         </div>
     `;
+    return layout({ content });
 };
