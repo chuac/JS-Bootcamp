@@ -94,6 +94,8 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 	Cookies: After an initial request from the browser to server, the server can return a response with a cookie. Tells the browser to please include the cookie
 		with every followup request
 		We don't want to allow a user to be able to modify their cookie and pretend that they are someone they're not.
+	
+	Project re-structure: create a sub-router into other routes files
 
 
 2:10
