@@ -1,7 +1,7 @@
 const express = require('express');
-const { validationResult } = require('express-validator');
 const multer = require('multer'); // multer also parses our data so need to use it before the validator middleware
 
+const { handleErrors } = require('./middlewares');
 const productsRepo = require('../../repositories/products'); // import in from our UsersRepo we created
 const productsNewTemplate = require('../../views/admin/products/new');
 const { requireTitle,
@@ -28,13 +28,8 @@ router.post('/admin/products/new',
         requireTitle,
         requirePrice
     ],
+    handleErrors(productsNewTemplate), // notice no parenthesis for our template, because we're passing in a reference to that function, not calling it
     async (req, res) => {
-        const errors = validationResult(req); // errors is array of objects
-        if (!errors.isEmpty()) {
-            //console.log(errors);
-            return res.send(productsNewTemplate({ req, errors }));
-        }
-        
         const image = req.file.buffer.toString('base64');
         const { title, price } = req.body;
         await productsRepo.create({ title, price, image });

@@ -1,6 +1,6 @@
 const express = require('express');
-const { validationResult } = require('express-validator');
 
+const { handleErrors } = require('./middlewares');
 const usersRepo = require('../../repositories/users'); // import in from our UsersRepo we created
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
@@ -22,16 +22,10 @@ router.post('/signup',
         requireEmail,
         requirePassword,
         requirePasswordConfirmation
-    ], 
+    ],
+    handleErrors(signupTemplate),
     async (req, res) => { // we could add our bodyParser Middleware here or up above in 'router.use'!
-        const errors = validationResult(req); // errors is array of objects
-        if (!errors.isEmpty()) {
-            console.log(errors);
-            return res.send(signupTemplate({ req, errors }));
-        }
-        
-        const { email, password, passwordConfirmation } = req.body; // all form data is contained inside req.body
-
+        const { email, password } = req.body; // all form data is contained inside req.body
 
         // Create a user in our user repo to represent this person
         const user = await usersRepo.create({ email, password });
@@ -56,12 +50,8 @@ router.post('/signin',
         requireEmailExists,
         requireValidPasswordForUser
     ], 
+    handleErrors(signinTemplate),
     async (req, res) => {
-        const errors = validationResult(req); // errors is array of objects
-        if (!errors.isEmpty()) {
-            return res.send(signinTemplate({ errors })); // pass our errors to the template to be displayed to user
-        }
-
         const { email } = req.body;
 
         const user = await usersRepo.getOneBy({ email }); // the user object from our db (if user exists!)
