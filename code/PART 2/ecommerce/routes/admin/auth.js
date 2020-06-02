@@ -1,10 +1,15 @@
 const express = require('express');
-const { validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 const usersRepo = require('../../repositories/users'); // import in from our UsersRepo we created
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
-const { requireEmail, requirePassword, requirePasswordConfirmation } = require('./validators') // moved our chain validators to another file
+const { requireEmail, 
+        requirePassword, 
+        requirePasswordConfirmation,
+        requireEmailExists,
+        requireValidPasswordForUser
+    } = require('./validators') // moved our chain validators to another file
 
 const router = express.Router(); // instead of app, this Router will link it back to where app is created in index.js
 
@@ -46,22 +51,24 @@ router.get('/signin', (req, res) => {
     res.send(signinTemplate());
 });
 
-router.post('/signin', async (req, res) => {
-    const { email, password } = req.body;
+router.post('/signin', 
+    [
+        requireEmailExists,
+        requireValidPasswordForUser
+    ], 
+    async (req, res) => {
+        const errors = validationResult(req); // errors is array of objects
+        if (!errors.isEmpty()) {
+            console.log(errors);
+            //return res.send(signupTemplate({ req, errors }));
+        }
 
-    const user = await usersRepo.getOneBy({ email }); // the user object from our db (if user exists!)
+        const { email } = req.body;
 
-    if (!user) { // user object is undefined, i.e, user not found
-        return res.send('Email not found');
-    }
+        const user = await usersRepo.getOneBy({ email }); // the user object from our db (if user exists!)
 
-    const validPassword = await usersRepo.comparePasswords(user.password, password);
-    if (!validPassword) {
-        return res.send('Invalid password');
-    }
-
-    req.session.userId = user.id;
-    res.send('You are signed in!');
+        req.session.userId = user.id; // attached user's ID to their cookie data to keep them signed in
+        res.send('You are signed in!');
 });
 
 module.exports = router;
