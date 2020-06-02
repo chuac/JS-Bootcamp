@@ -1,28 +1,6 @@
 const layout = require('../layout');
+const { getError } = require('../../helpers');
 
-const getError = (errors, property) => {
-    // property === 'email' || 'password' || 'passwordconfirmation'
-    try {
-        return errors.mapped()[property].msg;
-    } catch (err) { // to catch weird errors
-        return '';
-    }
-        /*
-            errors.mapped() is and object like below
-            {
-                email: {
-                    msg: 'Invalid email'
-                },
-                password: {
-                    msg: 'Password too short'
-                },
-                passwordConfirmation: {
-                    msg: 'Password doesn't match'
-                }
-            }
-            // then the [property] will match the sub-object, and the .msg will get the msg
-        */ 
-}
 
 module.exports = ({ req, errors }) => { // assuming we'll pass in an object that has the req property
     const content = `
