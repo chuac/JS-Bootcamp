@@ -6,6 +6,7 @@ const authRouter = require('./routes/admin/auth'); // authRouter will be used be
 
 const app = express();
 
+app.use(express.static('public')); // look inside our cwd, and the public folder and make it available to the world
 app.use(bodyParser.urlencoded({ extended: true} )); // now every single route handler will be parsed by this
 app.use(cookieSession({
     keys: ['eagsgdsfjdgaifieaflayaaq']

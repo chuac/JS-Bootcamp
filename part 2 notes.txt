@@ -97,5 +97,8 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 	
 	Project re-structure: create a sub-router into other routes files
 
+	Public directory available to the entire world, like fonts, css, etc
+	When you use an express.static middleware, express actually looks into the static folder declared *every time* a request is made to see if a route file is there first.
+
 
 2:10
