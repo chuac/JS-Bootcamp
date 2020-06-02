@@ -1,6 +1,6 @@
 const express = require('express');
 const { validationResult } = require('express-validator');
-const multer = require('multer');
+const multer = require('multer'); // multer also parses our data so need to use it before the validator middleware
 
 const productsRepo = require('../../repositories/products'); // import in from our UsersRepo we created
 const productsNewTemplate = require('../../views/admin/products/new');
@@ -23,20 +23,21 @@ router.get('/admin/products/new', (req, res) => {
 });
 
 router.post('/admin/products/new', 
+    upload.single('image'), // 'image' is the form field's name. access at req.file. put this middleware before the validator middlewares
     [
         requireTitle,
         requirePrice
     ],
-    upload.single('image'), // 'image' is the form field's name. access at req.file
-    (req, res) => {
+    async (req, res) => {
         const errors = validationResult(req); // errors is array of objects
-        // if (!errors.isEmpty()) {
-        //     console.log(errors);
-        //     return res.send(signupTemplate({ req, errors }));
-        // }
-        //console.log(req.body);
+        if (!errors.isEmpty()) {
+            //console.log(errors);
+            return res.send(productsNewTemplate({ req, errors }));
+        }
         
-        console.log(req.file);
+        const image = req.file.buffer.toString('base64');
+        const { title, price } = req.body;
+        await productsRepo.create({ title, price, image });
 
         res.send('submitted');
     })

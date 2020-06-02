@@ -103,5 +103,11 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 
 	HTML Forms have an enctype. Specifies how we want the form data to be encoded. URLencoded vs. enctype="multipart/form-data" for images
 
+	4 ways to serve images (worse to best): #1: Co-located disk, image file on the hard disk of that one server. Doesn't work for multi-server approach
+						#2: Storing the actual image on the database, and since db is shared between few servers, not good as DB storage is expensive.
+						#3: Data store like Amazon S3. the images uploaded still flows into our server and they need to process it to upload to S3.
+						#4: Presigned URL is given to the user from our server and the browser can use the URL to directly upload the image to S3.
+	There is an order to which middlewares are run, from the ones declared in index.js, then left to right
+
 
 2:10
