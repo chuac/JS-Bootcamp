@@ -4,6 +4,7 @@ const multer = require('multer'); // multer also parses our data so need to use 
 const { handleErrors } = require('./middlewares');
 const productsRepo = require('../../repositories/products'); // import in from our UsersRepo we created
 const productsNewTemplate = require('../../views/admin/products/new');
+const productsIndexTemplate = require('../../views/admin/products/index');
 const { requireTitle,
         requirePrice
 } = require('./validators') // moved our chain validators to another file
@@ -13,8 +14,10 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 
 //list different products
-router.get('/admin/products', (req, res) => {
+router.get('/admin/products', async (req, res) => {
+    const products = await productsRepo.getAll();
 
+    res.send(productsIndexTemplate({ products }));
 });
 
 
