@@ -54,4 +54,31 @@ router.get('/admin/products/:id/edit', requireAuth, async (req, res) => { // :id
     res.send(productsEditTemplate({ product }));
 }) 
 
+router.post('/admin/products/:id/edit', 
+    requireAuth, 
+    [
+        requireTitle,
+        requirePrice
+    ],
+    handleErrors(productsEditTemplate, async (req) => { // if form fails, we need to keep track of which product ID we were at, to show the user again
+        const product = await productsRepo.getOne(req.params.id);
+        return { product };
+    }),
+    upload.single('image'),
+    async (req, res) => {
+        const changes = req.body;
+
+        if (req.file) { // if file was provided in this form submission
+            changes.image = req.file.buffer.toString('base64');
+        }
+
+        try {
+            await productsRepo.update(req.params.id, changes);
+        } catch (err) {
+            return res.send('Could not find item');
+        }
+
+        res.redirect('/admin/products');
+})
+
 module.exports = router;

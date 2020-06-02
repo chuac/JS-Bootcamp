@@ -53,7 +53,7 @@ module.exports = class Respository {
         await this.writeAll(filteredRecords); // write the data without this removed user back into the .json file
     }
 
-    async update(id, attrs) { // attrs is an object 
+    async update(id, attrs) { // attrs is an object of all the updated attributes for this target record
         const records = await this.getAll();
         const record = records.find((record) => record.id === id);
 

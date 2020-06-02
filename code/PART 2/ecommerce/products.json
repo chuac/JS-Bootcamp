@@ -1,14 +1,14 @@
 [
   {
-    "title": "abcd",
+    "title": "New Product",
     "price": 12,
-    "image": "iVBORw0KGgoAAAANSUhEUgAAAAMAAAAGCAIAAACJh7NbAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAOSURBVBhXY/gPAwwkswBOQjXLXCGJHgAAAABJRU5ErkJggg==",
+    "image": "",
     "id": "c433e899"
   },
   {
     "title": "Test Product",
-    "price": 49.95,
-    "image": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=",
+    "price": 59.99,
+    "image": "",
     "id": "dbaeada1"
   },
   {
