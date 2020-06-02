@@ -5,6 +5,7 @@ const { handleErrors, requireAuth } = require('./middlewares');
 const productsRepo = require('../../repositories/products'); // import in from our UsersRepo we created
 const productsNewTemplate = require('../../views/admin/products/new');
 const productsIndexTemplate = require('../../views/admin/products/index');
+const productsEditTemplate = require('../../views/admin/products/edit');
 const { requireTitle,
         requirePrice
 } = require('./validators') // moved our chain validators to another file
@@ -40,5 +41,17 @@ router.post('/admin/products/new',
 
         res.redirect('/admin/products'); // now redirects to the products index
     })
+
+
+router.get('/admin/products/:id/edit', requireAuth, async (req, res) => { // :id is called a wildcard, anything in that path will be captured
+    console.log(req.params.id);
+    const product = await productsRepo.getOne(req.params.id);
+
+    if (!product) { // didn't find product
+        return res.send('Product not found');
+    }
+
+    res.send(productsEditTemplate({ product }));
+}) 
 
 module.exports = router;
