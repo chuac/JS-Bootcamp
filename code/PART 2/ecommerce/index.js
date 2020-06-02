@@ -8,7 +8,7 @@ const productsRouter = require('./routes/admin/products');
 const app = express();
 
 app.use(express.static('public')); // look inside our cwd, and the public folder and make it available to the world
-app.use(bodyParser.urlencoded({ extended: true} )); // now every single route handler will be parsed by this
+app.use(bodyParser.urlencoded({ extended: true} )); // now every single route handler will be parsed by this. only handles url-encoded form data!
 app.use(cookieSession({
     keys: ['eagsgdsfjdgaifieaflayaaq']
 })); // cookie-session will encrypt the info we store in the cookie, when we provide a key string

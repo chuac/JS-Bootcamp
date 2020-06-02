@@ -86,6 +86,7 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 	When making POST requests, the Request Body instead takes the form data, instead of in the URL
 	Middleware! : Function that does pre-processing on the 'req' and 'res' objects. Allows code re-use in Express. They are functions that are in the middle of a 
 		request handler.
+		Before using bodyParser middleware, we access form data like req.on('data', (data) => console.log(data) );
 	Custom database: Users repository and Products repository. A repository will be a single Class that is the gatekeeper responsible for data access. It'll have methods
 		like getByID(), getAll(), delete(), etc. All data is stored as plain JS objects, in a .json file
 	Constructor functions in JS Classes aren't allowed to be async. Since we're only creating the repo once, we can use "sync" version of fs.accessSync()
@@ -99,6 +100,8 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 
 	Public directory available to the entire world, like fonts, css, etc
 	When you use an express.static middleware, express actually looks into the static folder declared *every time* a request is made to see if a route file is there first.
+
+	HTML Forms have an enctype. Specifies how we want the form data to be encoded. URLencoded vs. enctype="multipart/form-data" for images
 
 
 2:10
