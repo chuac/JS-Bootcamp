@@ -31,7 +31,7 @@ router.post('/signup',
         const user = await usersRepo.create({ email, password });
         // Store the id of that user inside the users cookie
         req.session.userId = user.id; // req.session is an object added by cookie-session library!
-        res.send('Account created');
+        res.redirect('/admin/products');
 });
 
 
@@ -57,7 +57,7 @@ router.post('/signin',
         const user = await usersRepo.getOneBy({ email }); // the user object from our db (if user exists!)
 
         req.session.userId = user.id; // attached user's ID to their cookie data to keep them signed in
-        res.send('You are signed in!');
+        res.redirect('/admin/products');
 });
 
 module.exports = router;
