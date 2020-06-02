@@ -1,5 +1,5 @@
 const express = require('express');
-const { check, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 
 const usersRepo = require('../../repositories/users'); // import in from our UsersRepo we created
 const signupTemplate = require('../../views/admin/auth/signup');

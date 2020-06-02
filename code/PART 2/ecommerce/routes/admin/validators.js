@@ -2,6 +2,15 @@ const { check } = require('express-validator');
 const usersRepo = require('../../repositories/users'); // import in from our UsersRepo we created
 
 module.exports = {
+    requireTitle: check('title') // 'title' here refers to the name="title" property in our HTML form
+        .trim()
+        .isLength( { min: 2, max: 40 })
+        .withMessage('Must be between 2 and 40 characters'),
+    requirePrice: check('price')
+        .trim()
+        .toFloat() // server always gets a string from numbers in a HTML form, so convert first
+        .isFloat({ min: 1 }) // to actually make sure we got a number from toFloat() above
+        .withMessage('Must be a number greater than 1'),
     requireEmail: check('email')
         .trim()
         .normalizeEmail()
