@@ -1,9 +1,10 @@
 const express = require('express');
-const { check, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 
 const usersRepo = require('../../repositories/users'); // import in from our UsersRepo we created
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
+const { requireEmail, requirePassword, requirePasswordConfirmation } = require('./validators') // moved our chain validators to another file
 
 const router = express.Router(); // instead of app, this Router will link it back to where app is created in index.js
 
@@ -13,36 +14,15 @@ router.get('/signup', (req, res) => { // request, response...at the root route
 
 router.post('/signup', 
     [
-        check('email')
-            .trim()
-            .normalizeEmail()
-            .isEmail()
-            .withMessage('Must be a valid email')
-            .custom(async (email) => {
-                const existingUser = await usersRepo.getOneBy({ email }); // key and variable value are the same so can write short-hand
-                if (existingUser) {
-                    throw new Error('Email already in use');
-                }
-            }),
-        check('password')
-            .trim()
-            .isLength({ min: 4, max: 20})
-            .withMessage('Must be between 4 and 20 characters'),
-        check('passwordConfirmation')
-            .trim()
-            .isLength({ min: 4, max: 20})
-            .withMessage('Must be between 4 and 20 characters')
-            .custom((passwordConfirmation, { req }) => {
-                if (passwordConfirmation != req.body.password) {
-                    throw new Error('Passwords must match');
-                }
-            })
+        requireEmail,
+        requirePassword,
+        requirePasswordConfirmation
     ], 
     async (req, res) => { // we could add our bodyParser Middleware here or up above in 'router.use'!
         const errors = validationResult(req); // errors is array of objects
         if (!errors.isEmpty()) {
             console.log(errors);
-            return res.status(422).json({ errors: errors.array() });
+            return res.send(signupTemplate({ req, errors }));
         }
         
         const { email, password, passwordConfirmation } = req.body; // all form data is contained inside req.body
