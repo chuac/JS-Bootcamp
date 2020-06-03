@@ -109,6 +109,11 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 						#4: Presigned URL is given to the user from our server and the browser can use the URL to directly upload the image to S3.
 	There is an order to which middlewares are run, from the ones declared in index.js, then left to right
 
-	Our product delete button will be wrapped around a form, instead of just anchor tag. So we can POST the request
+	Our product delete button will be wrapped around a form, instead of just anchor tag. So we can POST the request.
+
+	Shopping cart: Problem #1: How do tie a cart to a user that's never logged in?
+					Build a cart in the backend, store the cart ID in a user's cookies
+			Problem #2: How to associate a cart with number of products?
+					Carts repo holding just item IDs and quantity of each item
 
 2:10

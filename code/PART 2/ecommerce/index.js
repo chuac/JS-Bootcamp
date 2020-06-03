@@ -5,6 +5,7 @@ const cookieSession = require('cookie-session'); // also a middleware function
 const authRouter = require('./routes/admin/auth'); // authRouter will be used below
 const adminProductsRouter = require('./routes/admin/products');
 const productsRouter = require('./routes/products');
+const cartsRouter = require('./routes/carts');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cookieSession({
 app.use(authRouter); // this has to be after our middleware initialisations just above!!
 app.use(adminProductsRouter);
 app.use(productsRouter);
+app.use(cartsRouter);
 
 
 app.listen(3000, () => { // access at 'localhost:3000'
