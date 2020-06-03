@@ -35,7 +35,11 @@ router.post('/admin/products/new',
     ],
     handleErrors(productsNewTemplate), // notice no parenthesis for our template, because we're passing in a reference to that function, not calling it
     async (req, res) => {
-        const image = req.file.buffer.toString('base64');
+        let image;
+        if (req.file.buffer) {
+            image = req.file.buffer.toString('base64');
+        }
+        //const image = req.file.buffer.toString('base64');
         const { title, price } = req.body;
         await productsRepo.create({ title, price, image });
 
@@ -77,6 +81,15 @@ router.post('/admin/products/:id/edit',
         } catch (err) {
             return res.send('Could not find item');
         }
+
+        res.redirect('/admin/products');
+})
+
+
+router.post('/admin/products/:id/delete', 
+    requireAuth, 
+    async (req, res) => {
+        await productsRepo.delete(req.params.id); // req.params.id is how we capture the :id wildcard in the URL
 
         res.redirect('/admin/products');
 })
