@@ -115,5 +115,8 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 					Build a cart in the backend, store the cart ID in a user's cookies
 			Problem #2: How to associate a cart with number of products?
 					Carts repo holding just item IDs and quantity of each item
+		The Add to Cart button is in the <footer> of each product, at products index page. This button is wrapped in a form
+			with POST action, and has the item ID added to the URL. OR we could do a hidden input that sends a value
+			of the product ID (with name="productId"). We can then access this in routes under req.body.productId .
 
 2:10
