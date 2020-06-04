@@ -1,5 +1,22 @@
 // no need to require our actual .js file. Mocha does that for us
 
+const waitFor = (selector) => {
+    return new Promise((resolve, reject) => {
+        const interval = setInterval(() => {
+            if (document.querySelector(selector)) {
+                clearTimeout(timeout); // the DOM element has appeared, clear the timeout below
+                resolve();
+            }
+        }, 30); // check the DOM for the element, every 30ms
+        
+        const timeout = setTimeout(() => {
+            clearInterval(interval); // stop the interval above
+            reject(); // if the element hasn't appeared after 2000ms, then we won't keep waiting for it
+        }, 2000); // wait up to a max of 2000ms
+    });
+};
+
+
 beforeEach(() => { // runs before every test
     document.querySelector('#target').innerHTML = '';
 
@@ -27,11 +44,12 @@ it('Dropdown starts closed', () => {
 });
 
 
-it('After searching, dropdown opens up', () => {
+it('After searching, dropdown opens up', async () => {
     const input = document.querySelector('.input');
-
     input.value = 'avengers';
     input.dispatchEvent(new Event('input')); // fake a DOM event of 'input'
+
+    await waitFor('.dropdown-item') // wait for that element to appear, otherwise the code below would fail instantly
 
     const dropdown = document.querySelector('.dropdown');
 
