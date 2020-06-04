@@ -134,6 +134,9 @@ Testing: some people spend more time setting up testing than actually writing te
 
 	With the start of every test, we want to start our widget from scratch. Use Mocha's beforeEach() to run before each test
 
+Our own Testing Framework: File Collection: recursively find all files ending in *.test.js through that folder. When found, store a reference to that file, after done
+	searching, execute the files one by one.
+
 
 
 
