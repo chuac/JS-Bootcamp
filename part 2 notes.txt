@@ -119,4 +119,11 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 			with POST action, and has the item ID added to the URL. OR we could do a hidden input that sends a value
 			of the product ID (with name="productId"). We can then access this in routes under req.body.productId .
 
-2:10
+Testing: some people spend more time setting up testing than actually writing tests, all frameworks essentially the same, no framework
+	even needed!
+	By naming convention, if you want to test a file named index.js, your tests should be in index.test.js
+
+
+
+
+12:10
