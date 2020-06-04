@@ -61,5 +61,12 @@ router.get('/cart', async (req, res) => {
 
 
 // receive a POST request to delete an item from a cart
+router.post('/cart/products/delete', async (req, res) => {
+    // if (!req.session.cartId) { // no cart found in user's cookies
+    //     return res.redirect('/');
+    // }
+    console.log(req.body.itemId);
+})
+
 
 module.exports = router;
