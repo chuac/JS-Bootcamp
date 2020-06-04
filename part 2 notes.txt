@@ -123,6 +123,8 @@ Testing: some people spend more time setting up testing than actually writing te
 	even needed!
 	By naming convention, if you want to test a file named index.js, your tests should be in index.test.js.
 	Maybe we write a test first before writing our code.
+	Why use testing frameworks? They help with global scopes of our variables, Errors thrown by one failure wouldn't stop other code,
+		Easier to find where the error occured
 
 
 
