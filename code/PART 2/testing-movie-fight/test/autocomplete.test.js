@@ -55,3 +55,16 @@ it('After searching, dropdown opens up', async () => {
 
     expect(dropdown.className).to.include('is-active');
 });
+
+
+it('After searching, displays some results', async () => {
+    const input = document.querySelector('.input');
+    input.value = 'avengers';
+    input.dispatchEvent(new Event('input')); // fake a DOM event of 'input'
+
+    await waitFor('.dropdown-item') // wait for that element to appear, otherwise the code below would fail instantly
+
+    const items = document.querySelectorAll('.dropdown-item'); // each item in the dropdown menu has class of dropdown-item
+
+    expect(items.length).to.equal(3); // expecting 3 movies in the dropdown menu
+})
