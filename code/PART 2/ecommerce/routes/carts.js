@@ -38,7 +38,7 @@ router.post('/cart/products', async (req, res) => {
         items: cart.items
     }); // we update the repo with this updated cart.items array of objects
 
-    res.send('Product added to cart');
+    res.redirect('/cart');
 })
 
 
@@ -62,10 +62,16 @@ router.get('/cart', async (req, res) => {
 
 // receive a POST request to delete an item from a cart
 router.post('/cart/products/delete', async (req, res) => {
-    // if (!req.session.cartId) { // no cart found in user's cookies
-    //     return res.redirect('/');
-    // }
-    console.log(req.body.itemId);
+    // Check if user has a cartId in their cookies?
+
+    const { itemId } = req.body;
+    const cart = await cartsRepo.getOne(req.session.cartId);
+
+    const items = cart.items.filter((item) => item.id !== itemId); // keep all the items that DON'T match what we want to delete
+    
+    await cartsRepo.update(req.session.cartId, { items });
+
+    res.redirect('/cart');
 })
 
 
