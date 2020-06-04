@@ -17,6 +17,7 @@
     <script class="mocha-init">
       mocha.setup('bdd');
       mocha.checkLeaks();
+      const expect = chai.expect; // saves us having to write chai.expect everywhere in our test file
     </script>
 
     <!-- add script tags linking to our test files, here. Above the mocha-exec class -->

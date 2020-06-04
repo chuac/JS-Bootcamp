@@ -13,5 +13,11 @@ it('Shows an autocomplete widget', () => {
         renderOption(movie) {
             return movie.Title;
         }
-    })
+    });
+
+    const dropdown = document.querySelector('.dropdown');
+    // make sure dropdown element starts off being closed. no "is-active" class
+    expect(dropdown.className).not.to.include('is-active'); // check Chai Assertion Library documentation
 });
+
+

@@ -46,3 +46,8 @@ figure .image img {
   height: 50px;
   margin-right: 10px;
 }
+
+/* To make sure the dropdown menu shows up below the input box */
+.dropdown-menu {
+  position: relative;
+}
