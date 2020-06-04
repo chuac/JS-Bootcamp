@@ -121,7 +121,8 @@ Ecommerce app: Inside "scripts" of package.json, add a key called "dev" and valu
 
 Testing: some people spend more time setting up testing than actually writing tests, all frameworks essentially the same, no framework
 	even needed!
-	By naming convention, if you want to test a file named index.js, your tests should be in index.test.js
+	By naming convention, if you want to test a file named index.js, your tests should be in index.test.js.
+	Maybe we write a test first before writing our code.
 
 
 

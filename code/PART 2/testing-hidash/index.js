@@ -9,5 +9,13 @@ module.exports = {
             //const value = arr[index];
             func(arr[index], index);
         }
+    },
+
+    map(arr, func) {
+        const result = [];
+        for (let i = 0; i < arr.length; i++) {
+            result.push(func(arr[i]));
+        }
+        return result;
     }
 }
