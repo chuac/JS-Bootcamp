@@ -2,11 +2,12 @@ const express = require('express');
 
 const cartsRepo = require('../repositories/carts');
 const productsRepo = require('../repositories/products');
+const cartShowTemplate = require('../views/carts/show');
 
 const router = express.Router();
 
 
-// receive a POST request to add an item to a cart
+// receive a POST request to add an item to a cart. Our Add to Cart button is wrapped inside an input
 router.post('/cart/products', async (req, res) => {
     //console.log(`Item ID: ${req.body.productId}`);
 
@@ -40,7 +41,24 @@ router.post('/cart/products', async (req, res) => {
     res.send('Product added to cart');
 })
 
+
 // receive a GET request to show all items in cart
+router.get('/cart', async (req, res) => {
+    if (!req.session.cartId) { // no cart found in user's cookies
+        return res.redirect('/');
+    }
+
+    const cart = await cartsRepo.getOne(req.session.cartId);
+
+    for (let item of cart.items) { // iterate over the items array that holds these item objects
+        const product = await productsRepo.getOne(item.id);
+
+        item.product = product; // append the product to the item's object. we won't save this to the db but will pass it to the template for display
+    }
+
+    res.send(cartShowTemplate({ items: cart.items })); // pass in a list of our items
+})
+
 
 // receive a POST request to delete an item from a cart
 
