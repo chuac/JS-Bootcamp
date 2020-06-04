@@ -129,6 +129,8 @@ Testing: some people spend more time setting up testing than actually writing te
 	Install Mocha globally using 'npm install -g mocha'
 	Challenges are setting up Mocha to run browser-based code vs command line code
 
+	Fundamental question: Do we want our API request to be a part of our testing?
+
 
 
 
