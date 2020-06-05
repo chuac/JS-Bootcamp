@@ -136,6 +136,7 @@ Testing: some people spend more time setting up testing than actually writing te
 
 Our own Testing Framework: File Collection: recursively find all files ending in *.test.js through that folder. When found, store a reference to that file, after done
 	searching, execute the files one by one.
+	In our Breadth-First Search implementation: we'll only add nodes we care about if they're either a folder or file with *.test.js extension.
 
 
 
