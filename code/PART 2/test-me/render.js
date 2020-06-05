@@ -12,7 +12,11 @@ const render = async (filename) => {
         resources: 'usable'
     });
 
-    return dom;
+    return new Promise((resolve, reject) => {
+        dom.window.document.addEventListener('DOMContentLoaded', () => {
+            resolve(dom); // wait for all content to be loaded before moving forward.
+        }); // waits for the event that all scripts/tags are loaded & executed, then only run the attached callback function
+    });
 };
 
 module.exports = render;

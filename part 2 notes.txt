@@ -144,6 +144,10 @@ Our own Testing Framework: File Collection: recursively find all files ending in
 	Using mocha to test our samplewebapp would be very challenging
 	JSDOM.fromFile() can load up a fresh version of our web app before each 'it' statement
 
+	Unfortunately, JSDOM doesn't wait to run the <script> tags inside a HTML doc before resolving the fromFile promise. This means our tests will run straight away
+		but the JS code linked to it using <script> hasn't even run yet.
+		Luckily, we can add a Promise and listen to the event of 'DOMContentLoaded' inside render(). Only resolve once everything has loaded.
+
 
 
 
