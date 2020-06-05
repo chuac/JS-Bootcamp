@@ -140,6 +140,8 @@ Our own Testing Framework: File Collection: recursively find all files ending in
 
 	global variable is special in NodeJS.
 
+	use jsdom to create a fake website
+
 
 
 
