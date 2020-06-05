@@ -11,6 +11,18 @@ class Runner {
 
     async runTests() {
         for (let file of this.testFiles) { // 'file' is an object with a 'name' key
+            const beforeEaches = [];
+            global.beforeEach = (func) => {
+                beforeEaches.push(func); // grab any functions from beforeEach and store them into that array for 'it' to use
+            }
+
+            global.it = (desc, func) => { // "inject" the 'it' function into the file we're about to require
+                beforeEaches.forEach((fn) => fn()); // for each function inside beforeEaches, run them now. before we run our test
+
+                console.log(desc);
+                func(); // run the 'it' test function
+            };
+
             require(file.name); // node will require that file, and execute all the code inside! no need for childProcesses
         }
     }

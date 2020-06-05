@@ -138,6 +138,8 @@ Our own Testing Framework: File Collection: recursively find all files ending in
 	searching, execute the files one by one.
 	In our Breadth-First Search implementation: we'll only add nodes we care about if they're either a folder or file with *.test.js extension.
 
+	global variable is special in NodeJS.
+
 
 
 
