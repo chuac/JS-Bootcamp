@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const chalk = require('chalk');
+
 
 class Runner {
     constructor() {
@@ -11,6 +13,7 @@ class Runner {
 
     async runTests() {
         for (let file of this.testFiles) { // 'file' is an object with a 'name' key
+            console.log(chalk.gray(`TESTING --> ${file.name}`));
             const beforeEaches = [];
             global.beforeEach = (func) => {
                 beforeEaches.push(func); // grab any functions from beforeEach and store them into that array for 'it' to use
@@ -19,11 +22,23 @@ class Runner {
             global.it = (desc, func) => { // "inject" the 'it' function into the file we're about to require
                 beforeEaches.forEach((fn) => fn()); // for each function inside beforeEaches, run them now. before we run our test
 
-                console.log(desc);
-                func(); // run the 'it' test function
+                try {
+                    func(); // run the 'it' test function
+                    console.log(chalk.green.bold(`\tOK - ${desc}`)); // won't be run if func() returns an error, it'll skip this line and go into the catch
+                } catch (err) {
+                    const message = err.message.replace(/\n/g, '\n\t\t'); // regex to indent the whole error message
+                    console.log(chalk.red.bold(`\tX - ${desc}`));
+                    console.log(chalk.red.bold('\t', message));
+                }
+                
             };
-
-            require(file.name); // node will require that file, and execute all the code inside! no need for childProcesses
+            try {
+                require(file.filepath); // Node will require that file, and execute all the code inside! no need for childProcesses
+            } catch (err) {
+                const message = err.message.replace(/\n/g, '\n\t\t');
+                console.log(chalk.red.bold(message));
+            }
+            
         }
     }
 
@@ -36,7 +51,7 @@ class Runner {
             const stats = await fs.promises.lstat(filepath);
 
             if (stats.isFile() && file.includes('.test.js')) { // check if it's a file (not folder) and has the extension we're looking for
-                this.testFiles.push({ name: filepath }); // store the absolute path, in an object
+                this.testFiles.push({ filepath, name: file }); // store the absolute path, in an object. and also store the short path (relative to the cwd)
             } else if (stats.isDirectory()) {
                 const childFiles = await fs.promises.readdir(filepath); // get all the children from inside this folder
 
