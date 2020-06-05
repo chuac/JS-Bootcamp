@@ -22,11 +22,11 @@ class Runner {
                 beforeEaches.push(func); // grab any functions from beforeEach and store them into that array for 'it' to use
             }
 
-            global.it = (desc, func) => { // "inject" the 'it' function into the file we're about to require
+            global.it = async (desc, func) => { // "inject" the 'it' function into the file we're about to require
                 beforeEaches.forEach((fn) => fn()); // for each function inside beforeEaches, run them now. before we run our test
 
                 try {
-                    func(); // run the 'it' test function
+                    await func(); // run the 'it' test function. await it since it may take time for a function to run
                     console.log(chalk.green.bold(`\tOK - ${desc}`)); // won't be run if func() returns an error, it'll skip this line and go into the catch
                 } catch (err) {
                     const message = err.message.replace(/\n/g, '\n\t\t'); // regex to indent the whole error message
