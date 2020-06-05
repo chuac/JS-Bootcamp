@@ -5,6 +5,7 @@ const path = require('path');
 
 const chalk = require('chalk');
 
+const forbiddenDirs = ['node_modules']; // we don't want to search these folders for test files
 
 class Runner {
     constructor() {
@@ -52,7 +53,7 @@ class Runner {
 
             if (stats.isFile() && file.includes('.test.js')) { // check if it's a file (not folder) and has the extension we're looking for
                 this.testFiles.push({ filepath, name: file }); // store the absolute path, in an object. and also store the short path (relative to the cwd)
-            } else if (stats.isDirectory()) {
+            } else if (stats.isDirectory() && !forbiddenDirs.includes(file)) { // check if folder and isn't included in our forbiddenDirs array
                 const childFiles = await fs.promises.readdir(filepath); // get all the children from inside this folder
 
                 files.push(...childFiles.map((child) => path.join(file, child))); // spread in all the children of this folder into our BFS's array that we're iterating over
