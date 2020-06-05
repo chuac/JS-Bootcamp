@@ -7,7 +7,7 @@ const runner = new Runner();
 
 const run = async () => { // need this helper function to call await functions
     await runner.collectFiles(process.cwd()); // process.cwd() to get the path whereever this app is run (by calling tme)
-    console.log(runner.testFiles);
     
+    runner.runTests();
 };
 run();

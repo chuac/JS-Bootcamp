@@ -9,6 +9,12 @@ class Runner {
         this.testFiles = []; // contains all the files we found with the extension we specified (*.test.js)
     }
 
+    async runTests() {
+        for (let file of this.testFiles) { // 'file' is an object with a 'name' key
+            require(file.name); // node will require that file, and execute all the code inside! no need for childProcesses
+        }
+    }
+
     async collectFiles(targetPath) { // breadth-first search (BFS)
         // targetPath === /Users/chris/Documents/projects/movie-fight , for example
         const files = await fs.promises.readdir(targetPath);
