@@ -140,7 +140,9 @@ Our own Testing Framework: File Collection: recursively find all files ending in
 
 	global variable is special in NodeJS.
 
-	use jsdom to create a fake website
+	use jsdom to create a fake website.
+	Using mocha to test our samplewebapp would be very challenging
+	JSDOM.fromFile() can load up a fresh version of our web app before each 'it' statement
 
 
 

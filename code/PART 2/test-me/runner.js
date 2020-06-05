@@ -2,8 +2,9 @@
 
 const fs = require('fs');
 const path = require('path');
-
 const chalk = require('chalk');
+
+const render = require('./render');
 
 const forbiddenDirs = ['node_modules']; // we don't want to search these folders for test files
 
@@ -15,6 +16,7 @@ class Runner {
     async runTests() {
         for (let file of this.testFiles) { // 'file' is an object with a 'name' key
             console.log(chalk.gray(`TESTING --> ${file.name}`));
+            global.render = render; // render will now be available to other files/projects
             const beforeEaches = [];
             global.beforeEach = (func) => {
                 beforeEaches.push(func); // grab any functions from beforeEach and store them into that array for 'it' to use
